@@ -91,40 +91,8 @@
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ti-bell"></i>
-                                @if ($menus['task_count'])
                                 <div class="notify" id="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
-                                @endif
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" id="mailbox">
-                                <ul>
-                                @if ($menus['task_count'])
-                                    <li>
-                                        <div class="drop-title"><span id='task_count'>{{ $menus['task_count'] }}</span> Task Sales yang belum diapprove</div>
-                                    </li>
-                                    <li>
-                                        <div class="message-center" id="message-center">
-                                            @foreach ( $menus['task_list'] as $val)
-                                            <a id='{{$val->id}}' href="{{ route('unsigned-task', 1)}}">
-                                                <div class="btn btn-success btn-circle"><i class="ti-bell"></i></div>
-                                                <div class="mail-contnet">
-                                                    <h6 style="color:black;">{{ $val->tipe_tasks['nama_kode'] }} Pada Kios {{ $val->kioss['nama_Kios'] }}</h6> <span class="mail-desc">Nama Sales : {{ $val->saless['nama_sales'] }}</span> <span class="time">{{$val->date}}</span>
-                                                </div>
-                                            </a>
-                                            @endforeach
-                                        </div>
-                                    </li>
-                                    @if ($menus['task_count'] > 5 )
-                                    <li id='lainnya'>
-                                        <a class="nav-link text-center link" href="{{ route('unsigned-task', 1)}}"> <strong>Lihat lainnya</strong> <i class="fa fa-angle-right"></i> </a>
-                                    </li>
-                                    @endif
-                                @else
-                                    <li>
-                                        <div class="drop-title">Tidak ada notifikasi terbaru</div>
-                                    </li>
-                                @endif
-                                </ul>
-                            </div>
                         </li>
                         <!-- ============================================================== -->
                         <!-- End Comment -->
