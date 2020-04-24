@@ -14,24 +14,18 @@ class MakeTableAdministrator extends Migration
     public function up()
     {
         DB::statement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
-        Schema::create('administrators', function (Blueprint $table) {
+        Schema::create('admin', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('id_role');
-            $table->string('name');
-            $table->string('nik')->nullable();
-            $table->string('nip')->nullable();
-            $table->string('phone')->nullable();
-            $table->date('tanggal_lahir')->nullable();
+            $table->string('nama');
+            $table->string('no_hp')->nullable();
             $table->string('email');
             $table->string('password');
             $table->string('confirm_password')->nullable();
-            $table->string('address')->nullable();
-            $table->string('status');
-            $table->string('remember_token')->nullable();
+            $table->uuid('id_role');
             $table->date('deleted_at')->nullable();
             $table->timestamps();
         });
-        DB::statement('ALTER TABLE administrators ALTER COLUMN id SET DEFAULT uuid_generate_v4();');
+        DB::statement('ALTER TABLE admin ALTER COLUMN id SET DEFAULT uuid_generate_v4();');
     }
 
     /**
