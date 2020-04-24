@@ -61,3 +61,21 @@ Route::get('/logs', 'LogsController@index')->name('logs');
 Route::get('/logs-admin', 'LogsController@admin')->name('logs_admin');
 Route::get('/logs-admin-data', 'LogsController@admin_data')->name('logs-admin-data');
 
+
+Route::get('/master/kelompok', 'MasterController@listKelompok')->name('list-kelompok');
+Route::get('/master/kelompok/get', 'MasterController@listKelompokGet')->name('list-kelompok-get');
+Route::get('/master/kelompok/add', 'MasterController@addKelompok')->name('add-kelompok');
+Route::get('/master/kelompok/edit/{id}', 'MasterController@editKelompok')->name('edit-kelompok');
+Route::post('/master/kelompok/update', 'MasterController@updateKelompok')->name('update-kelompok');
+Route::post('/master/kelompok/store', 'MasterController@storeKelompok')->name('store-kelompok');
+Route::post('/master/kelompok/delete/{id}', 'MasterController@deleteKelompok')->name('delete-kelompok');
+
+
+Route::get('/master/marginkeuntungan', 'MasterController@listMarginkeuntungan')->name('list-marginkeuntungan');
+Route::get('/master/marginkeuntungan/get', 'MasterController@listMarginkeuntunganGet')->name('list-marginkeuntungan-get');
+Route::get('/master/marginkeuntungan/add', 'MasterController@addMarginkeuntungan')->name('add-marginkeuntungan');
+Route::get('/master/marginkeuntungan/edit/{id}', 'MasterController@editMarginkeuntungan')->name('edit-marginkeuntungan');
+Route::post('/master/marginkeuntungan/update', 'MasterController@updateMarginkeuntungan')->name('update-marginkeuntungan');
+Route::post('/master/marginkeuntungan/store', 'MasterController@storeMarginkeuntungan')->name('store-marginkeuntungan');
+Route::post('/master/marginkeuntungan/delete/{id}', 'MasterController@deleteMarginkeuntungan')->name('delete-marginkeuntungan');
+
