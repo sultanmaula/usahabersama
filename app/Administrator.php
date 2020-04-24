@@ -1,31 +1,25 @@
 <?php
 
-    namespace App;
+namespace App;
 
-    use Illuminate\Notifications\Notifiable;
-    use Illuminate\Foundation\Auth\User as Authenticatable;
-    use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-    class Administrator extends Authenticatable
+class Administrator extends Authenticatable
+{
+    use Notifiable;
+    use SoftDeletes;
+
+    protected $table = 'admin';
+    protected $guard = 'administrator';
+    protected $guarded = [];
+
+    public $incrementing = false;
+    public $keyType = 'uuid';
+
+    public function roles()
     {
-        use Notifiable;
-
-        protected $table 	= 'administrators';
-        protected $guard = 'administrator';
-        
-        use SoftDeletes;
-        public $incrementing = false; public $keyType = 'uuid';
-
-        protected $fillable = [
-            'name', 'email', 'password', 'nik', 'nip', 'phone', 'tanggal_lahir', 'address', 'status', 'deleted_at', 'created_at', 'updated_at',
-        ];
-
-        protected $hidden = [
-            'password', 'remember_token',
-        ];
-
-        public function role()
-        {
-            return $this->hasOne('App\Role', 'id_role');
-        }
+        return $this->belongsTo('App\Role', 'id_role', 'id');
     }
+}
