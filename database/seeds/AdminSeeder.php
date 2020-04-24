@@ -21,6 +21,12 @@ class AdminSeeder extends Seeder
             ['nama_menu' => 'Master', 'parent_menu_id' => 0, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 8, 'slug' => 'master', 'icon' => 'fas fa-database', 'no_urut' => 8],
             ['nama_menu' => 'Logs', 'parent_menu_id' => 0, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 14, 'slug' => 'logs', 'icon' => 'fa fa-history', 'no_urut' => 15],
 
+            ['nama_menu' => 'List Kelompok', 'parent_menu_id' => 8, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'list-kelompok', 'icon' => 'null', 'no_urut' => 1],
+            ['nama_menu' => 'Tambah Kelompok', 'parent_menu_id' => 8, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'add-kelompok', 'icon' => 'null', 'no_urut' => 2],
+            ['nama_menu' => 'List Margin Keuntungan', 'parent_menu_id' => 8, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'list-marginkeuntungan', 'icon' => 'null', 'no_urut' => 3],
+            ['nama_menu' => 'Add Margin Keuntungan', 'parent_menu_id' => 8, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'add-marginkeuntungan', 'icon' => 'null', 'no_urut' => 4],
+
+
             ['nama_menu' => 'Tambah Admin', 'parent_menu_id' => 4, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'add-admin', 'icon' => 'null', 'no_urut' => 1],
             ['nama_menu' => 'List Admin', 'parent_menu_id' => 4, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'list-admin', 'icon' => 'null', 'no_urut' => 2],
             ['nama_menu' => 'Role Admin', 'parent_menu_id' => 4, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'role-admin', 'icon' => 'null', 'no_urut' => 3],
