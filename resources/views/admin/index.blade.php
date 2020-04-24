@@ -24,31 +24,16 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Pilih Role</label>
-                                <select name="id_role" id="id_role" class="form-control select2">
-                                    <option value="">Pilih Role</option>
-                                    @foreach ($roles as $item)
-                                        <option value="{{$item->id}}">{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <!--/span-->
-                    </div>
-                    <div class="table-responsive m-t-40">
+
+                    <div class="table-responsive">
                         <table id="config-table" class="table display table-bordered table-striped no-wrap">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Name</th>
-                                    <th>NIK</th>
-                                    <th>NIP</th>
+                                    <th>No. HP</th>
                                     <th>Email</th>
                                     <th>Role</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -142,13 +127,10 @@
                 }
 
             },
-            {data: 'name', name: 'name'},
-            {data: 'nik', name: 'nik'},
-            {data: 'nip', name: 'nip'},
+            {data: 'nama', name: 'nama'},
+            {data: 'no_hp', name: 'no_hp'},
             {data: 'email', name: 'email'},
             {data: 'role_name', name: 'role_name'},
-            {data: 'status', name: 'status'},
-            //{data: 'foto', name: 'foto'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
             ],
         });

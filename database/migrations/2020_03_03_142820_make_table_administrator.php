@@ -35,6 +35,6 @@ class MakeTableAdministrator extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('administrators');
+        Schema::dropIfExists('admin');
     }
 }

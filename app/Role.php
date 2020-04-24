@@ -9,4 +9,5 @@ class Role extends Model
 {
     public $incrementing = false;
     use SoftDeletes;
+    public $keyType = 'uuid';
 }

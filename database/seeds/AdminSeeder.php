@@ -51,12 +51,12 @@ class AdminSeeder extends Seeder
             );
         }
         //seeder3
-        DB::table('administrators')->truncate();
+        DB::table('admin')->truncate();
         $data_array = RoleModel::all();
         foreach ($data_array as $k => $v) {
             date_default_timezone_set('Asia/Jakarta');
-            DB::table('administrators')->insert(
-                ['id_role' => $v->id, 'name' => 'admin', 'phone' => '081320938989', 'email' => 'admin@gmail.com', 'password' => bcrypt('admin123'), 'confirm_password' => encrypt('admin123'), 'address' => 'surabaya', 'status' => 'aktif', 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s')]
+            DB::table('admin')->insert(
+                ['id_role' => $v->id, 'nama' => 'admin', 'no_hp' => '081320938989', 'email' => 'admin@gmail.com', 'password' => bcrypt('admin123'), 'confirm_password' => encrypt('admin123'), 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s')]
             );
         }
     }

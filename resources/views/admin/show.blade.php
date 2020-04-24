@@ -24,39 +24,22 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label class="control-label" style="font-weight: bold;">Nama</label>
-                        <div>{{$admin[0]->name}}</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" style="font-weight: bold;">Alamat</label>
-                        <div>{{$admin[0]->address}}</div>
+                        <div>{{$admin->nama}}</div>
                     </div>
                     <div class="form-group">
                         <label class="control-label" style="font-weight: bold;">Email</label>
-                        <div>{{$admin[0]->email}}</div>
+                        <div>{{$admin->email}}</div>
                     </div>
                     <div class="form-group">
                         <label class="control-label" style="font-weight: bold;">No. Telp</label>
-                        <div>{{$admin[0]->phone}}</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" style="font-weight: bold;">NIP</label>
-                        <div>{{$admin[0]->nip}}</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" style="font-weight: bold;">NIK</label>
-                        <div>{{$admin[0]->nik}}</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" style="font-weight: bold;">Tanggal Lahir</label>
-                        <div>{{$admin[0]->tanggal_lahir}}</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" style="font-weight: bold;">Status</label>
-                        <div>{{$admin[0]->status}}</div>
+                        <div>{{$admin->no_hp}}</div>
                     </div>
                     <div class="form-group">
                         <label class="control-label" style="font-weight: bold;">Role</label>
-                        <div>{{$admin[0]->role_name}}</div>
+                        <div>{{$admin->roles->name}}</div>
+                    </div>
+                    <div class="form-group mt-5">
+                        <a href="{{route('list-admin')}}" class="btn btn-info">Kembali</a>
                     </div>
                 </div>
             </div>
