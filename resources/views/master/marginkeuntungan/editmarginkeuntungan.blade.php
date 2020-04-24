@@ -45,7 +45,6 @@
                         <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
                         <a href="{{ url('/master/marginkeuntungan') }}}"><button type="button" class="btn btn-inverse">Cancel</button></a>
                         </div>
-                        
                     </form>
                 </div>
             </div>
