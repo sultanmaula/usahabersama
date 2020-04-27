@@ -79,3 +79,11 @@ Route::post('/master/marginkeuntungan/update', 'MasterController@updateMarginkeu
 Route::post('/master/marginkeuntungan/store', 'MasterController@storeMarginkeuntungan')->name('store-marginkeuntungan');
 Route::post('/master/marginkeuntungan/delete/{id}', 'MasterController@deleteMarginkeuntungan')->name('delete-marginkeuntungan');
 
+
+Route::get('/nasabah', 'NasabahController@listNasabah')->name('list-nasabah');
+Route::get('/nasabah/get', 'NasabahController@listNasabahGet')->name('list-nasabah-get');
+Route::get('/nasabah/add', 'NasabahController@addNasabah')->name('add-nasabah');
+Route::get('/nasabah/edit/{id}', 'NasabahController@editNasabah')->name('edit-nasabah');
+Route::post('/nasabah/update', 'NasabahController@updateNasabah')->name('update-nasabah');
+Route::post('/nasabah/store', 'NasabahController@storeNasabah')->name('store-nasabah');
+Route::post('/nasabah/delete/{id}', 'NasabahController@deleteNasabah')->name('delete-nasabah');
