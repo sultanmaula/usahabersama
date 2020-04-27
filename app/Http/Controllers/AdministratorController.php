@@ -15,12 +15,6 @@ class AdministratorController extends Controller
     {
         $this->middleware('auth:administrator');
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $controller    = new Controller;
@@ -37,7 +31,6 @@ class AdministratorController extends Controller
             ->get();
         return datatables()->of($data)
             ->addColumn('action', function ($data) {
-                //m
                 if ($data->role_name == 'SUPERADMIN' || $data->role_name == 'PRINCIPLE') {
                     $button = '<a href=' . route("edit-admin", $data->id) . ' style="display:none;" class="btn btn-xs btn-primary " type="button"><span class="btn-label"><i class="fa fa-file"></i></span></a>' . '&nbsp';
                     $button .= '<button class="btn btn-xs btn-danger" style="display:none;" data-record-id="' . $data->id . '" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>';

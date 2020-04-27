@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('assets')}}/images/favicon.png">
-    <title>Agro Kimia Dashboard</title>
+    <title>Usaha Bersama</title>
     <!-- This page CSS -->
     <!-- chartist CSS -->
     <link href="{{URL::asset('assets')}}/node_modules/morrisjs/morris.css" rel="stylesheet">
@@ -39,7 +39,7 @@
     <div class="preloader">
         <div class="loader">
             <div class="loader__figure"></div>
-            <p class="loader__label">Agro Kimia</p>
+            <p class="loader__label">Usaha Bersama</p>
         </div>
     </div>
     <!-- ============================================================== -->
@@ -64,7 +64,7 @@
                             <img src="{{URL::asset('assets')}}/images/logo-light-icon.png" alt="homepage" class="light-logo" />
                         </b>
                         <!--End Logo icon -->
-                        <span class="hidden-xs"><span class="font-bold">Agro</span>Kimia</span>
+                        <span class="hidden-xs"><span class="font-bold">Usaha </span>Bersama</span>
                     </a>
                 </div>
                 <!-- ============================================================== -->

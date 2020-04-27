@@ -70,7 +70,6 @@ Route::post('/master/kelompok/update', 'MasterController@updateKelompok')->name(
 Route::post('/master/kelompok/store', 'MasterController@storeKelompok')->name('store-kelompok');
 Route::post('/master/kelompok/delete/{id}', 'MasterController@deleteKelompok')->name('delete-kelompok');
 
-
 Route::get('/master/marginkeuntungan', 'MasterController@listMarginkeuntungan')->name('list-marginkeuntungan');
 Route::get('/master/marginkeuntungan/get', 'MasterController@listMarginkeuntunganGet')->name('list-marginkeuntungan-get');
 Route::get('/master/marginkeuntungan/add', 'MasterController@addMarginkeuntungan')->name('add-marginkeuntungan');
@@ -79,7 +78,6 @@ Route::post('/master/marginkeuntungan/update', 'MasterController@updateMarginkeu
 Route::post('/master/marginkeuntungan/store', 'MasterController@storeMarginkeuntungan')->name('store-marginkeuntungan');
 Route::post('/master/marginkeuntungan/delete/{id}', 'MasterController@deleteMarginkeuntungan')->name('delete-marginkeuntungan');
 
-
 Route::get('/nasabah', 'NasabahController@listNasabah')->name('list-nasabah');
 Route::get('/nasabah/get', 'NasabahController@listNasabahGet')->name('list-nasabah-get');
 Route::get('/nasabah/add', 'NasabahController@addNasabah')->name('add-nasabah');
@@ -87,3 +85,12 @@ Route::get('/nasabah/edit/{id}', 'NasabahController@editNasabah')->name('edit-na
 Route::post('/nasabah/update', 'NasabahController@updateNasabah')->name('update-nasabah');
 Route::post('/nasabah/store', 'NasabahController@storeNasabah')->name('store-nasabah');
 Route::post('/nasabah/delete/{id}', 'NasabahController@deleteNasabah')->name('delete-nasabah');
+
+Route::get('/transaksi', 'TransaksiController@list')->name('list-transaksi');
+Route::get('/transaksi/get-list', 'TransaksiController@get_list')->name('list-transaksi-get');
+Route::get('/transaksi/add', 'TransaksiController@add')->name('add-transaksi');
+Route::get('/transaksi/edit/{id}', 'TransaksiController@edit')->name('edit-transaksi');
+Route::post('/transaksi/update{id}', 'TransaksiController@update')->name('update-transaksi');
+Route::post('/transaksi/store', 'TransaksiController@store')->name('store-transaksi');
+Route::post('/transaksi/delete/{id}', 'TransaksiController@delete')->name('delete-transaksi');
+Route::get('/transaksi/detail/{id}', 'TransaksiController@detail')->name('detail-transaksi');
