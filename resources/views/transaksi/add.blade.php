@@ -59,6 +59,9 @@
                                         <label>Nama Nasabah</label>
                                         <select class="select2 form-control" name="id_nasabah" required>
                                             <option value="">Pilih Nasabah</option>
+                                            @foreach ($nasabah as $val)
+                                            <option value="{{$val->id}}">{{$val->nama}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

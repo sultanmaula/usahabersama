@@ -90,7 +90,7 @@ Route::get('/transaksi', 'TransaksiController@list')->name('list-transaksi');
 Route::get('/transaksi/get-list', 'TransaksiController@get_list')->name('list-transaksi-get');
 Route::get('/transaksi/add', 'TransaksiController@add')->name('add-transaksi');
 Route::get('/transaksi/edit/{id}', 'TransaksiController@edit')->name('edit-transaksi');
-Route::post('/transaksi/update', 'TransaksiController@update')->name('update-transaksi');
+Route::post('/transaksi/update{id}', 'TransaksiController@update')->name('update-transaksi');
 Route::post('/transaksi/store', 'TransaksiController@store')->name('store-transaksi');
 Route::post('/transaksi/delete/{id}', 'TransaksiController@delete')->name('delete-transaksi');
 Route::get('/transaksi/detail/{id}', 'TransaksiController@detail')->name('detail-transaksi');

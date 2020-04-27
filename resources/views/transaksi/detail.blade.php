@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label class="control-label" style="font-weight: bold;">Nama Nasabah</label>
-                    <div>{{$transaksi->id_nasabah}}</div>
+                    <div>{{$transaksi->nasabah->nama}}</div>
                 </div>
             </div>
             <div class="row">

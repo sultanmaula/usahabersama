@@ -14,4 +14,5 @@ class Nasabah extends Model
     protected $hidden   = ['created_at','updated_at'];
     protected $date = ['deleted_at'];
     public $incrementing = false;
+    public $keyType = 'uuid';
 }

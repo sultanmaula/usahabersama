@@ -72,7 +72,7 @@ $('#confirm-delete').on('click', '.btn-ok', function(e) {
         }
     });
     //$.ajax({url: '/deletekios/' + id, type: 'POST'})
-    $.post('/administrator/delete/' + id).then()
+    $.post('/transaksi/delete/' + id).then()
     $modalDiv.addClass('loading');
     setTimeout(function() {
         $modalDiv.modal('hide').removeClass('loading');
@@ -100,7 +100,7 @@ $(document).ready(function() {
 
             },
             { data: 'nama_produk' },
-            { data: 'id_nasabah' },
+            { data: 'nama_nasabah' },
             { data: 'status' },
             { data: 'tanggal' },
             { data: 'action', name: 'action', orderable: false, searchable: false },
