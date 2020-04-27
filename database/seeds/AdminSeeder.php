@@ -17,9 +17,14 @@ class AdminSeeder extends Seeder
         DB::table('menus')->truncate();
         DB::table('menus')->insert([
             ['nama_menu' => 'Dashboard', 'parent_menu_id' => 0, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 1, 'slug' => 'dashboard', 'icon' => 'fas fa-warehouse', 'no_urut' => 1],
+            ['nama_menu' => 'Nasabah', 'parent_menu_id' => 0, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 2, 'slug' => 'nasabah', 'icon' => 'fas fa-users', 'no_urut' => 2],
             ['nama_menu' => 'Administrator', 'parent_menu_id' => 0, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 4, 'slug' => 'administrator', 'icon' => 'fas fa-user-secret', 'no_urut' => 4],
             ['nama_menu' => 'Master', 'parent_menu_id' => 0, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 8, 'slug' => 'master', 'icon' => 'fas fa-database', 'no_urut' => 8],
             ['nama_menu' => 'Logs', 'parent_menu_id' => 0, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 14, 'slug' => 'logs', 'icon' => 'fa fa-history', 'no_urut' => 15],
+
+            ['nama_menu' => 'List Nasabah', 'parent_menu_id' => 2, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'list-nasabah', 'icon' => 'null', 'no_urut' => 1],
+            ['nama_menu' => 'Tambah Nasabah', 'parent_menu_id' => 2, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'add-nasabah', 'icon' => 'null', 'no_urut' => 2],
+
 
             ['nama_menu' => 'List Kelompok', 'parent_menu_id' => 8, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'list-kelompok', 'icon' => 'null', 'no_urut' => 1],
             ['nama_menu' => 'Tambah Kelompok', 'parent_menu_id' => 8, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'add-kelompok', 'icon' => 'null', 'no_urut' => 2],
