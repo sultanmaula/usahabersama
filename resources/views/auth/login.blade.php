@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('assets')}}/images/favicon.png">
-    <title>Agro Kimia</title>
+    <title>Usaha Bersama</title>
 
     <!-- page css -->
     <link href="{{URL::asset('css')}}/pages/login-register-lock.css" rel="stylesheet">
@@ -33,7 +33,7 @@
     <div class="preloader">
         <div class="loader">
             <div class="loader__figure"></div>
-            <p class="loader__label">Agro Kimia</p>
+            <p class="loader__label">Usaha Bersama</p>
         </div>
     </div>
     <!-- ============================================================== -->
@@ -43,7 +43,7 @@
         <div class="login-box card">
             <div class="card-body">
                 <form class="form-horizontal form-material text-center" id="loginform" method="post" action="{{route('login')}}">@csrf
-                    <a href="javascript:void(0)" class="db" style="font-size: 24px; color: black;">Agro Kimia</a>
+                    <a href="javascript:void(0)" class="db" style="font-size: 24px; color: black;">Usaha Bersama</a>
                     <div class="form-group m-t-40">
                         <div class="col-xs-12">
                             <input class="form-control" name="email" type="email" required="" placeholder="Email">
