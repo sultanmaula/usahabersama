@@ -6,11 +6,11 @@
     <!-- ============================================================== -->
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h4 class="text-themecolor">List Transaksi</h4>
+            <h4 class="text-themecolor">List Angsuran</h4>
         </div>
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
-                <a href="{{route('add-angsuran')}}" type="button" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Tambah Transaksi</a>
+                <a href="{{route('add-angsuran')}}" type="button" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Tambah Angsuran</a>
             </div>
         </div>
     </div>
