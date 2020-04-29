@@ -32,7 +32,7 @@
                                         <select style="height: 150%" class="select2 form-control" name="id_transaksi" required>
                                             <option value="">Pilih Transaksi</option>
                                             @foreach ($transaksi as $val)
-                                            <option value="{{$val->id}}">{{$val->id}}</option>
+                                            <option value="{{$val->id}}">{{$val->nama}} - {{$val->nama_kelompok}} - {{$val->nama_produk}}</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -66,11 +66,13 @@ class TransaksiController extends Controller
             'status'         => 'required',
         ]);
 
-        $data['harga_produk']   = intval(preg_replace('/\D/', '', $data['harga_produk']));
-        $data['total_pinjaman'] = intval(preg_replace('/\D/', '', $data['total_pinjaman']));
-        $data['jumlah_cicilan'] = intval(preg_replace('/\D/', '', $data['jumlah_cicilan']));
-        $data['sisa_pinjaman']  = intval(preg_replace('/\D/', '', $data['sisa_pinjaman']));
-        $data['status']         = intval($data['status']);
+        $data['harga_produk']       = intval(preg_replace('/\D/', '', $data['harga_produk']));
+        $data['total_pinjaman']     = intval(preg_replace('/\D/', '', $data['total_pinjaman']));
+        $data['sisa_pinjaman']      = intval(preg_replace('/\D/', '', $data['sisa_pinjaman']));
+        $data['status']             = intval($data['status']);
+        $data['angsuran_pokok']     = intval($data['harga_produk'] / 24);
+        $data['angsuran_bagihasil'] = intval((($data['harga_produk'] * 30) / 100) / 24);
+        $data['jumlah_cicilan']     = intval($data['angsuran_pokok'] + $data['angsuran_bagihasil']);
 
         Transaksi::create($data);
         // admin_logs::addLogs("ADD-001", "Administrator");
@@ -83,7 +85,7 @@ class TransaksiController extends Controller
         $data['menus'] = $controller->menus();
 
         $data['transaksi']                 = Transaksi::with('nasabah')->find($id);
-        $data['transaksi']->status         = ($data['transaksi']->status == 1) ? 'Aktif' : 'Tidak Aktif';
+        $data['transaksi']->status         = ($data['transaksi']->status == 1) ? 'Lunas' : 'Belum Lunas';
         $data['transaksi']->tanggal        = date('d-m-Y', strtotime($data['transaksi']->tanggal));
         $data['transaksi']->harga_produk   = 'Rp. ' . number_format($data['transaksi']->harga_produk, 0, ",", ".");
         $data['transaksi']->total_pinjaman = 'Rp. ' . number_format($data['transaksi']->total_pinjaman, 0, ",", ".");
@@ -96,16 +98,16 @@ class TransaksiController extends Controller
 
     public function edit($id)
     {
-        $controller        = new Controller;
-        $data['menus']     = $controller->menus();
+        $controller    = new Controller;
+        $data['menus'] = $controller->menus();
 
-        $data['transaksi'] = Transaksi::find($id);
+        $data['transaksi']                 = Transaksi::find($id);
         $data['transaksi']->tanggal        = date('d-m-Y', strtotime($data['transaksi']->tanggal));
         $data['transaksi']->harga_produk   = 'Rp. ' . number_format($data['transaksi']->harga_produk, 0, ",", ".");
         $data['transaksi']->total_pinjaman = 'Rp. ' . number_format($data['transaksi']->total_pinjaman, 0, ",", ".");
         $data['transaksi']->jumlah_cicilan = 'Rp. ' . number_format($data['transaksi']->jumlah_cicilan, 0, ",", ".");
         $data['transaksi']->sisa_pinjaman  = 'Rp. ' . number_format($data['transaksi']->sisa_pinjaman, 0, ",", ".");
-        $data['nasabah']   = Nasabah::where('id', '!=', $data['transaksi']->nasabah->id)->get();
+        $data['nasabah']                   = Nasabah::where('id', '!=', $data['transaksi']->nasabah->id)->get();
         // dd($data['nasabah']);
 
         return view('transaksi.edit', $data);
@@ -124,11 +126,13 @@ class TransaksiController extends Controller
             'status'         => 'required',
         ]);
 
-        $data['harga_produk']   = intval(preg_replace('/\D/', '', $data['harga_produk']));
-        $data['total_pinjaman'] = intval(preg_replace('/\D/', '', $data['total_pinjaman']));
-        $data['jumlah_cicilan'] = intval(preg_replace('/\D/', '', $data['jumlah_cicilan']));
-        $data['sisa_pinjaman']  = intval(preg_replace('/\D/', '', $data['sisa_pinjaman']));
-        $data['status']         = intval($data['status']);
+        $data['harga_produk']       = intval(preg_replace('/\D/', '', $data['harga_produk']));
+        $data['total_pinjaman']     = intval(preg_replace('/\D/', '', $data['total_pinjaman']));
+        $data['sisa_pinjaman']      = intval(preg_replace('/\D/', '', $data['sisa_pinjaman']));
+        $data['status']             = intval($data['status']);
+        $data['angsuran_pokok']     = intval($data['harga_produk'] / 24);
+        $data['angsuran_bagihasil'] = intval((($data['harga_produk'] * 30) / 100) / 24);
+        $data['jumlah_cicilan']     = intval($data['angsuran_pokok'] + $data['angsuran_bagihasil']);
 
         Transaksi::find($id)->update($data);
         // admin_logs::addLogs("UPD-002", "Administrator");
