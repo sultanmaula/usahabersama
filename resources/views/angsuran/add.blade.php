@@ -53,29 +53,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Sisa Pinjaman</label>
-                                        <input type="text" name="sisa_pinjaman" value="{{ old('sisa_pinjaman') }}" class="form-control nominal" spellcheck="false" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
                                         <label class="control-label">Tanggal</label>
                                         <input autocomplete="off" type="text" name="tanggal" class="form-control date" value="{{ old('tanggal') }}" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Status</label><br>
-                                        <div class="form-check form-check-inline mt-2">
-                                            <input class="form-check-input" type="radio" name="status" id="inlineRadio1" value="1">
-                                            <label class="form-check-label" for="inlineRadio1">Aktif</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="status" id="inlineRadio2" value="0">
-                                            <label class="form-check-label" for="inlineRadio2">Tidak Aktif</label>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

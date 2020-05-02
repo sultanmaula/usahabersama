@@ -52,7 +52,7 @@ class AngsuranController extends Controller
 
         return datatables()->of($data)
             ->addColumn('status', function ($data) {
-                return ($data->status == 1) ? 'Aktif' : 'Tidak Aktif';
+                return ($data->status == 1) ? 'Lunas' : 'Belum Lunas';
             })
             ->addColumn('transaksi', function ($data) {
                 $trans     = self::list_transaksi($data->id_transaksi);

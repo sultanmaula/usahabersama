@@ -109,6 +109,42 @@
                     </tr>
                 </table>
             </div>
+            <div class="row">
+                <table class="table">
+                    <tr>
+                        <th>Deskripsi</th>
+                        <th>Pokok</th>
+                        <th>Laba</th>
+                        <th>Jumlah</th>
+                    </tr>
+                    <tr>
+                        <th>Sisa</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Total Angsuran</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="row">
+                <table class="table">
+                    <tr>
+                        <th>Angsuran Ke</th>
+                        <th>Tanggal</th>
+                        <th>Angsuran Pokok</th>
+                        <th>Sisa Pokok</th>
+                        <th>Angsuran Laba</th>
+                        <th>Sisa Laba</th>
+                        <th>Total Angsuran</th>
+                        <th>Mod</th>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
