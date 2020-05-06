@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Nasabah;
 use App\Transaksi;
+use App\MarginKeuntungan;
 use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
 {
+    public $prosentase;
 
     public function __construct()
     {
         $this->middleware('auth:administrator');
+
+        $this->prosentase = MarginKeuntungan::pluck('prosentase')->first();
     }
+
     function list() {
         $controller    = new Controller;
         $data['menus'] = $controller->menus();
@@ -33,8 +38,8 @@ class TransaksiController extends Controller
             })
             ->addColumn('action', function ($data) {
 
-                $button = '<a href=' . route("edit-transaksi", $data->id) . ' class="btn btn-xs btn-primary " type="button"><span class="btn-label"><i class="fa fa-file"></i></span></a>' . '&nbsp';
-                $button .= '<button class="btn btn-xs btn-danger" data-record-id="' . $data->id . '" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>';
+                // $button = '<a href=' . route("edit-transaksi", $data->id) . ' class="btn btn-xs btn-primary " type="button"><span class="btn-label"><i class="fa fa-file"></i></span></a>' . '&nbsp';
+                $button = '<button class="btn btn-xs btn-danger" data-record-id="' . $data->id . '" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>';
                 $button .= "&nbsp";
                 $button .= '<a href=' . route("detail-transaksi", $data->id) . ' class="btn btn-xs btn-warning " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></a>';
                 $button .= "&nbsp";
@@ -59,18 +64,16 @@ class TransaksiController extends Controller
             'nama_produk'    => 'required',
             'harga_produk'   => 'required',
             'id_nasabah'     => 'required',
-            'total_pinjaman' => 'required',
             'tanggal'        => 'required',
-            'jumlah_cicilan' => 'required',
-            'sisa_pinjaman'  => 'required',
-            'status'         => 'required',
         ]);
 
-        $data['harga_produk']   = intval(preg_replace('/\D/', '', $data['harga_produk']));
-        $data['total_pinjaman'] = intval(preg_replace('/\D/', '', $data['total_pinjaman']));
-        $data['jumlah_cicilan'] = intval(preg_replace('/\D/', '', $data['jumlah_cicilan']));
-        $data['sisa_pinjaman']  = intval(preg_replace('/\D/', '', $data['sisa_pinjaman']));
-        $data['status']         = intval($data['status']);
+        $data['harga_produk']       = intval(preg_replace('/\D/', '', $data['harga_produk']));
+        $data['total_pinjaman']     = $data['harga_produk'] + (( $data['harga_produk'] * $this->prosentase ) / 100);
+        $data['sisa_pinjaman']      = $data['total_pinjaman'];
+        $data['status']             = 0;
+        $data['angsuran_pokok']     = intval($data['harga_produk'] / 24);
+        $data['angsuran_bagihasil'] = intval((($data['harga_produk'] * 30) / 100) / 24);
+        $data['jumlah_cicilan']     = $data['angsuran_pokok'] + $data['angsuran_bagihasil'];
 
         Transaksi::create($data);
         // admin_logs::addLogs("ADD-001", "Administrator");
@@ -83,7 +86,7 @@ class TransaksiController extends Controller
         $data['menus'] = $controller->menus();
 
         $data['transaksi']                 = Transaksi::with('nasabah')->find($id);
-        $data['transaksi']->status         = ($data['transaksi']->status == 1) ? 'Aktif' : 'Tidak Aktif';
+        $data['transaksi']->status         = ($data['transaksi']->status == 1) ? 'Lunas' : 'Belum Lunas';
         $data['transaksi']->tanggal        = date('d-m-Y', strtotime($data['transaksi']->tanggal));
         $data['transaksi']->harga_produk   = 'Rp. ' . number_format($data['transaksi']->harga_produk, 0, ",", ".");
         $data['transaksi']->total_pinjaman = 'Rp. ' . number_format($data['transaksi']->total_pinjaman, 0, ",", ".");
@@ -96,16 +99,16 @@ class TransaksiController extends Controller
 
     public function edit($id)
     {
-        $controller        = new Controller;
-        $data['menus']     = $controller->menus();
+        $controller    = new Controller;
+        $data['menus'] = $controller->menus();
 
-        $data['transaksi'] = Transaksi::find($id);
+        $data['transaksi']                 = Transaksi::find($id);
         $data['transaksi']->tanggal        = date('d-m-Y', strtotime($data['transaksi']->tanggal));
         $data['transaksi']->harga_produk   = 'Rp. ' . number_format($data['transaksi']->harga_produk, 0, ",", ".");
         $data['transaksi']->total_pinjaman = 'Rp. ' . number_format($data['transaksi']->total_pinjaman, 0, ",", ".");
         $data['transaksi']->jumlah_cicilan = 'Rp. ' . number_format($data['transaksi']->jumlah_cicilan, 0, ",", ".");
         $data['transaksi']->sisa_pinjaman  = 'Rp. ' . number_format($data['transaksi']->sisa_pinjaman, 0, ",", ".");
-        $data['nasabah']   = Nasabah::where('id', '!=', $data['transaksi']->nasabah->id)->get();
+        $data['nasabah']                   = Nasabah::where('id', '!=', $data['transaksi']->nasabah->id)->get();
         // dd($data['nasabah']);
 
         return view('transaksi.edit', $data);
@@ -117,18 +120,15 @@ class TransaksiController extends Controller
             'nama_produk'    => 'required',
             'harga_produk'   => 'required',
             'id_nasabah'     => 'required',
-            'total_pinjaman' => 'required',
             'tanggal'        => 'required',
-            'jumlah_cicilan' => 'required',
-            'sisa_pinjaman'  => 'required',
-            'status'         => 'required',
         ]);
 
-        $data['harga_produk']   = intval(preg_replace('/\D/', '', $data['harga_produk']));
-        $data['total_pinjaman'] = intval(preg_replace('/\D/', '', $data['total_pinjaman']));
-        $data['jumlah_cicilan'] = intval(preg_replace('/\D/', '', $data['jumlah_cicilan']));
-        $data['sisa_pinjaman']  = intval(preg_replace('/\D/', '', $data['sisa_pinjaman']));
-        $data['status']         = intval($data['status']);
+        $data['harga_produk']       = intval(preg_replace('/\D/', '', $data['harga_produk']));
+        $data['total_pinjaman']     = ( $data['harga_produk'] * $this->prosentase ) / 100;
+        $data['sisa_pinjaman']      = $data['total_pinjaman'];
+        $data['angsuran_pokok']     = intval($data['harga_produk'] / 24);
+        $data['angsuran_bagihasil'] = intval((($data['harga_produk'] * 30) / 100) / 24);
+        $data['jumlah_cicilan']     = $data['angsuran_pokok'] + $data['angsuran_bagihasil'];
 
         Transaksi::find($id)->update($data);
         // admin_logs::addLogs("UPD-002", "Administrator");

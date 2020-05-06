@@ -23,7 +23,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>ID Transaksi</th>
+                                    <th>Transaksi</th>
                                     <th>Cicilan Ke</th>
                                     <th>Tanggal</th>
                                     <th>Status</th>
@@ -99,7 +99,7 @@ $(document).ready(function() {
                 }
 
             },
-            { data: 'id_transaksi' },
+            { data: 'transaksi' },
             { data: 'cicilan_ke' },
             { data: 'tanggal' },
             { data: 'status' },

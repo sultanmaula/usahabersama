@@ -17,7 +17,7 @@ class CreateTransaksisTable extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nama_produk')->nullable();
-            $table->integer('harga_produk')->nullable();
+            $table->bigInteger('harga_produk')->nullable();
             $table->uuid('id_nasabah')->nullable();
             $table->integer('total_pinjaman')->nullable();
             $table->date('tanggal')->nullable();
