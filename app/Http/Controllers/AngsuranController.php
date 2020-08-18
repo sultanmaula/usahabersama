@@ -93,15 +93,15 @@ class AngsuranController extends Controller
             'id_transaksi'  => 'required',
             'cicilan_ke'    => 'required',
             'jml_angsuran'  => 'required',
-            'sisa_pinjaman' => 'required',
+            // 'sisa_pinjaman' => 'required',
             'tanggal'       => 'required',
             'keterangan'    => 'required',
-            'status'        => 'required',
+            // 'status'        => 'required',
         ]);
 
         $data['jml_angsuran']  = intval(preg_replace('/\D/', '', $data['jml_angsuran']));
-        $data['sisa_pinjaman'] = intval(preg_replace('/\D/', '', $data['sisa_pinjaman']));
-        $data['status']        = intval($data['status']);
+        // $data['sisa_pinjaman'] = intval(preg_replace('/\D/', '', $data['sisa_pinjaman']));
+        // $data['status']        = intval($data['status']);
 
         Angsuran::create($data);
         // admin_logs::addLogs("ADD-001", "Administrator");
