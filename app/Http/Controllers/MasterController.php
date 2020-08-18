@@ -161,6 +161,15 @@ class MasterController extends Controller
         return redirect()->route('list-marginkeuntungan');
     }
 
+    public function deleteMarginkeuntungan($id){
+
+        $data = MarginKeuntungan::find($id);
+        $data->delete();
+
+        return redirect()->route('list-marginkeuntungan');
+
+    }
+
     public function editMarginkeuntungan($id)
     {
         $controller    = new Controller;

@@ -9,7 +9,7 @@ class MarginKeuntungan extends Model
 {
     //
     Use SoftDeletes;
-    // protected $table 	= 'role_menus';
+    // protected $table 	= 'margin_keuntungans';
     protected $guarded = [''];
     protected $hidden   = ['created_at','updated_at'];
     protected $date = ['deleted_at'];
