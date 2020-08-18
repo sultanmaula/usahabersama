@@ -58,7 +58,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger btn-ok">Delete</button>
+                <button type="button" class="btn btn-danger btn-ok1">Delete</button>
             </div>
         </div>
     </div>
@@ -77,7 +77,7 @@
 
        
 
-        $('#confirm-delete').on('click', '.btn-ok', function(e) {
+        $('#confirm-delete').on('click', '.btn-ok1', function(e) {
             var $modalDiv = $(e.delegateTarget);
             var id = $(this).data('recordId');
             $.ajaxSetup({
@@ -85,7 +85,6 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            //$.ajax({url: '/deletekios/' + id, type: 'POST'})
             $.post('/master/marginkeuntungan/delete/' + id).then()
             $modalDiv.addClass('loading');
             setTimeout(function() {
@@ -97,7 +96,7 @@
         $('#confirm-delete').on('show.bs.modal', function(e) {
             var data = $(e.relatedTarget).data();
             $('.title', this).text(data.recordTitle);
-            $('.btn-ok', this).data('recordId', data.recordId);
+            $('.btn-ok1', this).data('recordId', data.recordId);
         });
         
         var today_table = $('#margin-keuntungan-table').DataTable({
