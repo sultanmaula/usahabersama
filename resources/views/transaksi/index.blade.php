@@ -23,10 +23,11 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Produk</th>
                                     <th>Nama Nasabah</th>
+                                    <th>Nama Produk</th>
                                     <th>Status</th>
-                                    <th>Tanggal</th>
+                                    <th>Tanggal Transaksi</th>
+                                    <th>Tanggal Jatuh Tempo</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -97,12 +98,12 @@ $(document).ready(function() {
                 render: function(data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }
-
             },
-            { data: 'nama_produk' },
             { data: 'nama_nasabah' },
+            { data: 'nama_produk' },
             { data: 'status' },
             { data: 'tanggal' },
+            { data: 'tanggal_jatuh_tempo' },
             { data: 'action', name: 'action', orderable: false, searchable: false },
         ],
     });

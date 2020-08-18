@@ -89,23 +89,73 @@ class AngsuranController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'id_transaksi'  => 'required',
-            'cicilan_ke'    => 'required',
             'jml_angsuran'  => 'required',
-            'sisa_pinjaman' => 'required',
             'tanggal'       => 'required',
             'keterangan'    => 'required',
-            'status'        => 'required',
         ]);
 
-        $data['jml_angsuran']  = intval(preg_replace('/\D/', '', $data['jml_angsuran']));
-        $data['sisa_pinjaman'] = intval(preg_replace('/\D/', '', $data['sisa_pinjaman']));
-        $data['status']        = intval($data['status']);
+        $jml_angsuran  = intval(preg_replace('/\D/', '', $request->jml_angsuran));
 
-        Angsuran::create($data);
-        // admin_logs::addLogs("ADD-001", "Administrator");
-        return redirect()->route('list-angsuran');
+        $transaksi = Transaksi::find($request->id_transaksi);
+
+        
+        $total_pinjaman = $transaksi->total_pinjaman;
+        $total_angsuran = $transaksi->jumlah_cicilan;    
+        $pokok = $transaksi->angsuran_pokok;
+        $laba = $transaksi->angsuran_bagihasil;
+        
+
+        $mod = floor($jml_angsuran/$total_angsuran);
+        
+        if ($mod <= 0) {
+            if ($jml_angsuran <= $pokok) {
+                $angsuran_laba = $mod*$laba;
+            } else {
+                $angsuran_laba = $jml_angsuran - $pokok;
+            }
+        } else {
+            $angsuran_laba = $mod*$laba;
+        }
+
+        $angsuran_pokok = $jml_angsuran - $angsuran_laba;
+
+        $angsura_ke = DB::table('angsurans')->where('id_transaksi', $request->id_transaksi)->latest()->pluck('cicilan_ke');
+        $sum_cicilan_terbayar = DB::table('angsurans')
+                                    ->select(DB::raw('SUM(jml_angsuran) as sum_angsuran_terbayar'))
+                                    ->where('id_transaksi', $request->id_transaksi)
+                                    ->pluck('sum_angsuran_terbayar');
+
+        $total_cicilan_terbayar = $sum_cicilan_terbayar[0];
+        
+        if (empty($total_cicilan_terbayar)) {
+            $total_cicilan_terbayar = 0;
+        }
+
+        $sisa_pinjaman = ($total_pinjaman-$total_cicilan_terbayar) - $jml_angsuran;
+
+        if (!empty($angsura_ke)) {
+            $angsuran_ke = $angsura_ke+1;
+        } else {
+            $angsuran_ke = 1;
+        }
+
+        $status = 0;
+        if ( $sisa_pinjaman <= 0) {
+            $sisa_pinjaman = 0;
+            $status = 1;
+        }
+
+        DB::table('angsurans')->insert([
+            'id_transaksi' => $id_transaksi, 'cicilan_ke' => $angsuran_ke, 'jml_angsuran' => $jml_angsuran, 'sisa_pinjamgan' => $sisa_pinjaman, 'tanggal' => $request->tanggal
+        ]);
+
+
+        
+       // Angsuran::create($data);
+        
+        //return redirect()->route('list-angsuran');
     }
 
     public function detail($id)

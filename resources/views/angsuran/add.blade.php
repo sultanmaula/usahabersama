@@ -37,34 +37,34 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Cicilan Ke</label>
                                         <input min="1" type="number" name="cicilan_ke" class="form-control" spellcheck="false" value="{{ old('cicilan_ke') }}" placeholder="" required>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
+                                </div> -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Jumlah Angsuran</label>
                                         <input type="text" id="jumlah_cicilan" name="jml_angsuran" value="{{ old('jml_angsuran') }}" class="form-control nominal" spellcheck="false" required>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Tanggal</label>
                                         <input autocomplete="off" type="text" name="tanggal" class="form-control date" value="{{ old('tanggal') }}" required>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Keterangan</label>
                                         <textarea name="keterangan" class="form-control editor" rows="10"> {{ old('keterangan') }} </textarea>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         <div class="form-actions m-t-20">

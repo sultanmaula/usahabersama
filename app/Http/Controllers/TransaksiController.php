@@ -6,6 +6,7 @@ use App\Nasabah;
 use App\Transaksi;
 use App\MarginKeuntungan;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class TransaksiController extends Controller
 {
@@ -29,9 +30,14 @@ class TransaksiController extends Controller
     {
         $data = Transaksi::with('nasabah')->get();
 
+        foreach($data as $row) {
+            $row->tanggal = \Carbon\Carbon::parse($row->tanggal)->format('d/m/Y');
+            $row->tanggal_jatuh_tempo = \Carbon\Carbon::parse($row->tanggal_jatuh_tempo)->format('d/m/Y');
+        }
+
         return datatables()->of($data)
             ->addColumn('status', function ($data) {
-                return ($data->status == 1) ? 'Aktif' : 'Tidak Aktif';
+                return ($data->status == 1) ? 'Lunas' : 'Belum Lunas';
             })
             ->addColumn('nama_nasabah', function ($data) {
                 return $data->nasabah['nama'];
@@ -64,8 +70,13 @@ class TransaksiController extends Controller
             'nama_produk'    => 'required',
             'harga_produk'   => 'required',
             'id_nasabah'     => 'required',
-            'tanggal'        => 'required',
         ]);
+
+        $tanggal = new Carbon($request->tanggal);
+
+        $tanggal_transaksi = \Carbon\Carbon::parse($request->tanggal)->format('Y-m-d');
+        
+        $jatuh_tempo = $tanggal->addYears(2); 
 
         $data['harga_produk']       = intval(preg_replace('/\D/', '', $data['harga_produk']));
         $data['total_pinjaman']     = $data['harga_produk'] + (( $data['harga_produk'] * $this->prosentase ) / 100);
@@ -74,9 +85,11 @@ class TransaksiController extends Controller
         $data['angsuran_pokok']     = intval($data['harga_produk'] / 24);
         $data['angsuran_bagihasil'] = intval((($data['harga_produk'] * 30) / 100) / 24);
         $data['jumlah_cicilan']     = $data['angsuran_pokok'] + $data['angsuran_bagihasil'];
+        $data['tanggal_jatuh_tempo']     = $jatuh_tempo;
+        $data['tanggal']     = $tanggal_transaksi;
 
         Transaksi::create($data);
-        // admin_logs::addLogs("ADD-001", "Administrator");
+        
         return redirect()->route('list-transaksi');
     }
 

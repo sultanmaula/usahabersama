@@ -7,6 +7,7 @@ use App\Nasabah;
 use App\Kelompok;
 use Datatables;
 use DB;
+use Carbon\Carbon;
 
 class NasabahController extends Controller
 {
@@ -60,17 +61,19 @@ class NasabahController extends Controller
             'alamat' => 'required',
             'kelompok' => 'required',
             'no_hp' => 'required',
-            'nik' => 'required',
-            'foto' => 'required|file|image|mimes:jpeg,png,jpg|max:2048'
+            // 'nik' => 'required',
+            // 'foto' => 'required|file|image|mimes:jpeg,png,jpg|max:2048'
         ]);
+        
+        $namaFile = '';
+        if ($request->file('foto')  ) {
+            $file = $request->file('foto');
+            $tujuan_upload = 'nasabah_image';
+            $namaFile = time()."_".$file->getClientOriginalName();
+            $file->move($tujuan_upload, $namaFile);
+        }
 
-        $file= $request->file('foto');
-        $tujuan_upload = 'nasabah_image';
-        $namaFile = time()."_".$file->getClientOriginalName();
-        // dd($request);
-        $file->move($tujuan_upload, $namaFile);
-
-        $nasabah                   = new Nasabah();
+        $nasabah = new Nasabah();
         $nasabah->nama = $request->nama_nasabah;
         $nasabah->alamat = $request->alamat;
         $nasabah->id_kelompok = $request->kelompok;
@@ -79,7 +82,6 @@ class NasabahController extends Controller
         $nasabah->foto = $namaFile;
         $nasabah->save();
 
-        // admin_logs::addLogs("ADD-001", "Kelompok");
         return redirect()->route('list-nasabah');
     }
 

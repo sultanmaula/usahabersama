@@ -58,11 +58,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">NIK</label>
-                                        <input type="text" name="nik" id="nik" class="form-control" placeholder="" required>
+                                        <input type="text" name="nik" id="nik" class="form-control" placeholder="">
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Foto</label>
-                                        <input type="file" name="foto" id="foto" class="form-control" placeholder="" required>
+                                        <input type="file" name="foto" id="foto" class="form-control" placeholder="">
                                         <p style="color:red; float:right; font-size:10px;">Max Upload 2Mb</p>
                                     </div>
                                    
