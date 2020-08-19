@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label class="control-label" style="font-weight: bold;">Total Pinjaman</label>
-                    <div>{{$transaksi->total_pinjaman}}</div>
+                    <div>{{$transaksi->jumlah_pinjaman}}</div>
                 </div>
                 <div class="form-group col-md-6">
                     <label class="control-label" style="font-weight: bold;">Nama Nasabah</label>

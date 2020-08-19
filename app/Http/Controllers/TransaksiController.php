@@ -67,9 +67,10 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nama_produk'    => 'required',
-            'harga_produk'   => 'required',
-            'id_nasabah'     => 'required',
+            'nama_produk'           => 'required',
+            'harga_produk'          => 'required',
+            'id_nasabah'            => 'required',
+            'jumlah_pinjaman_pokok' => 'required',
         ]);
 
         $tanggal = new Carbon($request->tanggal);
@@ -78,15 +79,17 @@ class TransaksiController extends Controller
         
         $jatuh_tempo = $tanggal->addYears(2); 
 
-        $data['harga_produk']       = intval(preg_replace('/\D/', '', $data['harga_produk']));
-        $data['total_pinjaman']     = $data['harga_produk'] + (( $data['harga_produk'] * $this->prosentase ) / 100);
-        $data['sisa_pinjaman']      = $data['total_pinjaman'];
-        $data['status']             = 0;
-        $data['angsuran_pokok']     = intval($data['harga_produk'] / 24);
-        $data['angsuran_bagihasil'] = intval((($data['harga_produk'] * 30) / 100) / 24);
-        $data['jumlah_cicilan']     = $data['angsuran_pokok'] + $data['angsuran_bagihasil'];
+        $data['harga_produk']            = intval(preg_replace('/\D/', '', $data['harga_produk']));
+        $data['total_pinjaman']          = intval(preg_replace('/\D/', '', $data['jumlah_pinjaman_pokok']));
+        $data['sisa_pinjaman']           = $data['total_pinjaman'];
+        $data['status']                  = 0;
+        $data['angsuran_pokok']          = intval($data['total_pinjaman'] / 24);
+        $data['angsuran_bagihasil']      = intval((($data['total_pinjaman'] * $this->prosentase) / 100) / 24);
+        $data['jumlah_cicilan']          = $data['angsuran_pokok'] + $data['angsuran_bagihasil'];
         $data['tanggal_jatuh_tempo']     = $jatuh_tempo;
-        $data['tanggal']     = $tanggal_transaksi;
+        $data['tanggal']                 = $tanggal_transaksi;
+        $data['jumlah_pinjaman_pokok']   = intval(preg_replace('/\D/', '', $data['jumlah_pinjaman_pokok']));
+        $data['jumlah_pinjaman_laba']    = $data['jumlah_pinjaman_pokok'] * $this->prosentase / 100;
 
         Transaksi::create($data);
         
@@ -105,7 +108,7 @@ class TransaksiController extends Controller
         $data['transaksi']->total_pinjaman = 'Rp. ' . number_format($data['transaksi']->total_pinjaman, 0, ",", ".");
         $data['transaksi']->jumlah_cicilan = 'Rp. ' . number_format($data['transaksi']->jumlah_cicilan, 0, ",", ".");
         $data['transaksi']->sisa_pinjaman  = 'Rp. ' . number_format($data['transaksi']->sisa_pinjaman, 0, ",", ".");
-        // admin_logs::addLogs("DTL-004", "Administrator");
+        $data['transaksi']->jumlah_pinjaman   = 'Rp. ' . number_format($data['transaksi']->jumlah_pinjaman_pokok+$data['transaksi']->jumlah_pinjaman_laba, 0, ",", ".");
 
         return view('transaksi.detail', $data);
     }
