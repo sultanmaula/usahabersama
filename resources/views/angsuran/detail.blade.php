@@ -40,16 +40,21 @@
                         <td><b>Realisasi</b></td>
                         <td>:</td>
                         <td>{{ $angsuran->tanggal }}</td>
-                    </tr>
+                    </tr>                    
                     <tr>
-                        <td><b>Pokok Pinjaman</b></td>
+                        <td><b>Harga Produk</b></td>
                         <td>:</td>
                         <td>{{ $angsuran->transaksi->harga_produk }}</td>
                     </tr>
                     <tr>
+                        <td><b>Pokok Pinjaman</b></td>
+                        <td>:</td>
+                        <td>{{ $angsuran->transaksi->jumlah_pinjaman_pokok }}</td>
+                    </tr>
+                    <tr>
                         <td><b>Laba 30%</b></td>
                         <td>:</td>
-                        <td>{{ $angsuran->transaksi->laba }}</td>
+                        <td>{{ $angsuran->transaksi->jumlah_pinjaman_laba }}</td>
                     </tr>
                     <tr>
                         <td><b>Jumlah</b></td>
@@ -141,8 +146,18 @@
                         <th>Angsuran Laba</th>
                         <th>Sisa Laba</th>
                         <th>Total Angsuran</th>
-                        <th>Mod</th>
                     </tr>
+                    @foreach($list_angsuran as $angsuran)
+                    <tr>
+                        <td>{{ $angsuran->cicilan_ke }}</td>
+                        <td>{{ $angsuran->tanggal }}</td>
+                        <td>Rp. {{ number_format($angsuran->angsuran_pokok, 0, ",", ".") }}</td>
+                        <td>Rp. {{ number_format($angsuran->sisa_pinjaman, 0, ",", ".") }}</td>
+                        <td>Rp. {{ number_format($angsuran->angsuran_laba, 0, ",", ".") }}</td>
+                        <td>Rp. {{ number_format($angsuran->sisa_laba, 0, ",", ".") }}</td>
+                        <td>Rp. {{ number_format($angsuran->jml_angsuran, 0, ",", ".") }}</td>
+                    </tr>
+                    @endforeach
                 </table>
             </div>
         </div>
