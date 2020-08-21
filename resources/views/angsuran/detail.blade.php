@@ -57,7 +57,7 @@
                         <td>{{ $angsuran->transaksi->jumlah_pinjaman_laba }}</td>
                     </tr>
                     <tr>
-                        <td><b>Jumlah</b></td>
+                        <td><b>Jumlah Pinjaman</b></td>
                         <td>:</td>
                         <td><b>{{ $angsuran->transaksi->hargaPlusLaba }}</b></td>
                     </tr>
@@ -103,7 +103,7 @@
                         <td>{{ $angsuran->transaksi->angsuran_pokok }}</td>
                     </tr>
                     <tr>
-                        <td><b>Angsuran Bagi Hasil</b></td>
+                        <td><b>Angsuran Laba</b></td>
                         <td>:</td>
                         <td>{{ $angsuran->transaksi->angsuran_bagihasil }}</td>
                     </tr>
@@ -124,15 +124,16 @@
                     </tr>
                     <tr>
                         <th>Sisa</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>Rp. {{ number_format($angsuran->sisa_pinjaman, 0, ",", ".") }}</td>
+                        <td>Rp. {{ number_format($angsuran->sisa_laba, 0, ",", ".") }}</td>
+                        <td>Rp. {{ number_format($angsuran->sisa_pinjaman + $angsuran->sisa_laba, 0, ",", ".") }}</td>
                     </tr>
+
                     <tr>
                         <th>Total Angsuran</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>Rp. {{ number_format($total_angsuran_pokok, 0, ",", ".") }}</td>
+                        <td>Rp. {{ number_format($total_angsuran_laba, 0, ",", ".") }}</td>
+                        <td>Rp. {{ number_format($total_angsuran_pokok + $total_angsuran_laba, 0, ",", ".") }}</td>
                     </tr>
                 </table>
             </div>
@@ -146,6 +147,7 @@
                         <th>Angsuran Laba</th>
                         <th>Sisa Laba</th>
                         <th>Total Angsuran</th>
+                        <th>Total Sisa</th>
                     </tr>
                     @foreach($list_angsuran as $angsuran)
                     <tr>
@@ -156,6 +158,7 @@
                         <td>Rp. {{ number_format($angsuran->angsuran_laba, 0, ",", ".") }}</td>
                         <td>Rp. {{ number_format($angsuran->sisa_laba, 0, ",", ".") }}</td>
                         <td>Rp. {{ number_format($angsuran->jml_angsuran, 0, ",", ".") }}</td>
+                        <td>Rp. {{ number_format($angsuran->sisa_pinjaman + $angsuran->sisa_laba, 0, ",", ".") }}</td>
                     </tr>
                     @endforeach
                 </table>

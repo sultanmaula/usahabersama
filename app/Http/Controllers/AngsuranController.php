@@ -79,8 +79,6 @@ class AngsuranController extends Controller
                 return $data[0]->tanggal;
             })
             ->addColumn('action', function ($data) {
-
-                // $button = '<a href=' . route("edit-angsuran", $data[0]->id) . ' class="btn btn-xs btn-primary " type="button"><span class="btn-label"><i class="fa fa-file"></i></span></a>' . '&nbsp';
                 $button = "&nbsp";
                 $button .= '<a href=' . route("detail-angsuran", $data[0]->id) . ' class="btn btn-xs btn-warning " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></a>';
                 $button .= "&nbsp";
@@ -169,8 +167,9 @@ class AngsuranController extends Controller
             }
 
             $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
+        
         } else {
-            if ($jml_angsuran <= $total_sisa_keseluruhan) {
+            if ($jml_angsuran < $total_sisa_keseluruhan) {
                 $angsuran_laba = $mod*$laba;
 
                 $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
@@ -228,10 +227,18 @@ class AngsuranController extends Controller
         $data['angsuran']->status        = ($data['angsuran']->status == 1) ? 'Aktif' : 'Tidak Aktif';
         $data['angsuran']->tanggal       = date('d-m-Y', strtotime($data['angsuran']->tanggal));
         $data['angsuran']->jml_angsuran  = 'Rp. ' . number_format($data['angsuran']->jml_angsuran, 0, ",", ".");
-        $data['angsuran']->sisa_pinjaman = 'Rp. ' . number_format($data['angsuran']->sisa_pinjaman, 0, ",", ".");
-        $data['angsuran']->angsuran_pokok = 'Rp. ' . number_format($data['angsuran']->angsuran_pokok, 0, ",", ".");
 
         $data['list_angsuran'] = DB::table('angsurans')->where('id_transaksi', $data['angsuran']->id_transaksi)->get();
+
+        $total_angsuran_pokok = 0;
+        $total_angsuran_laba = 0;
+        foreach ($data['list_angsuran'] as $angsuran) {
+            $total_angsuran_pokok = $total_angsuran_pokok + $angsuran->angsuran_pokok;
+            $total_angsuran_laba = $total_angsuran_laba + $angsuran->angsuran_laba;
+        }
+
+        $data['total_angsuran_pokok'] = $total_angsuran_pokok;
+        $data['total_angsuran_laba'] = $total_angsuran_laba;
 
         return view('angsuran.detail', $data);
     }
@@ -246,7 +253,6 @@ class AngsuranController extends Controller
         $data['angsuran']->jml_angsuran  = 'Rp. ' . number_format($data['angsuran']->jml_angsuran, 0, ",", ".");
         $data['angsuran']->sisa_pinjaman = 'Rp. ' . number_format($data['angsuran']->sisa_pinjaman, 0, ",", ".");
         $data['transaksi']               = Transaksi::where('id', '!=', $data['angsuran']->transaksi->id)->get();
-        // dd($data['nasabah']);
 
         return view('angsuran.edit', $data);
     }
@@ -268,7 +274,6 @@ class AngsuranController extends Controller
         $data['status']        = intval($data['status']);
 
         Angsuran::find($id)->update($data);
-        // admin_logs::addLogs("UPD-002", "Administrator");
 
         return redirect()->route('list-angsuran');
     }

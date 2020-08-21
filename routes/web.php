@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('qr-code', function () {
+    return QrCode::size(1000)->generate('google.compact(varname)');
+});
+
+
 Route::get('/', function () {
     return view('auth.login');
 });
