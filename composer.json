@@ -19,6 +19,7 @@
         "laravel/tinker": "^2.0",
         "nesbot/carbon": "^2.33",
         "sendgrid/sendgrid": "~7",
+        "simplesoftwareio/simple-qrcode": "^3.0",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {

@@ -190,6 +190,18 @@ return [
     |
     */
 
+    // 'providers' => [
+
+    //     SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
+
+    // ],
+
+    // 'aliases' => [
+
+    //     'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
+
+    // ],
+
     'aliases' => [
 
         'App' => Illuminate\Support\Facades\App::class,
