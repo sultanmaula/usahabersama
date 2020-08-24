@@ -8,10 +8,10 @@ use App\Kelompok;
 use Datatables;
 use DB;
 use Carbon\Carbon;
+use QrCode;
 
 class NasabahController extends Controller
 {
-    //
     public function __construct()
     {
         $this->middleware('auth:administrator');
@@ -30,9 +30,8 @@ class NasabahController extends Controller
         ->whereNull('n.deleted_at')
         ->whereNull('k.deleted_at')
         ->get();
-        // dd($datalist);
         $data = datatables()->of($datalist)
-            ->addColumn('action',function ($data){ //m
+            ->addColumn('action',function ($data){ 
                 $button ='<a href="/nasabah/edit/'.$data->id.'">
                 <button class="btn btn-xs btn-primary " type="button">
                 <span class="btn-label"><i class="fa fa-file"></i></span>
@@ -40,6 +39,8 @@ class NasabahController extends Controller
                 </a>';
                 $button.='<button class="btn btn-xs btn-danger" data-record-id="'.$data->id.'" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>';
                 $button.='&nbsp';
+                $button .= '<a href=' . route("detail-nasabah", $data->id) . ' class="btn btn-xs btn-warning " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></a>';
+                $button .= "&nbsp";
                 return $button;
             })->rawColumns(['action'])->make(true);
 
@@ -147,7 +148,6 @@ class NasabahController extends Controller
             );
         }
 
-        // admin_logs::addLogs("UPD-002", "Departemen");
         return redirect()->route('list-nasabah');
     }
 
@@ -161,12 +161,25 @@ class NasabahController extends Controller
         if (is_file($file)) {
           unlink($file);
         }
-        // dd($data->foto);
         $data->delete();
 
-        // admin_logs::addLogs("DEL-003", "Departemen");
         return redirect()->route('list-kelompok');
     }
 
+    public function detailNasabah($id)
+    {
+        $controller    = new Controller;
+        $data['menus'] = $controller->menus();
+        $data['nasabah'] = DB::table('nasabahs')->select('nasabahs.*', 'kelompoks.*', 'nasabahs.id as id_nasabah')->leftJoin('kelompoks', 'kelompoks.id', '=', 'nasabahs.id_kelompok')->where('nasabahs.id', $id)->get();
+
+        return view('nasabah.detailnasabah', $data);
+    }
+
+    public function printQrCodeNasabah($id)
+    {
+        $data['nasabah'] = DB::table('nasabahs')->where('id', $id)->get();
+
+        return view('nasabah.printqrcodenasabah', $data);
+    }
 
 }
