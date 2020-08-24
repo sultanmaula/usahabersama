@@ -90,6 +90,9 @@ Route::get('/nasabah/edit/{id}', 'NasabahController@editNasabah')->name('edit-na
 Route::post('/nasabah/update', 'NasabahController@updateNasabah')->name('update-nasabah');
 Route::post('/nasabah/store', 'NasabahController@storeNasabah')->name('store-nasabah');
 Route::post('/nasabah/delete/{id}', 'NasabahController@deleteNasabah')->name('delete-nasabah');
+Route::get('/nasabah/detail/{id}', 'NasabahController@detailNasabah')->name('detail-nasabah');
+Route::get('/nasabah/detail/printqrcode/{id}', 'NasabahController@printQrCodeNasabah')->name('printqrcode-nasabah');
+
 
 Route::get('/transaksi', 'TransaksiController@list')->name('list-transaksi');
 Route::get('/transaksi/get-list', 'TransaksiController@get_list')->name('list-transaksi-get');

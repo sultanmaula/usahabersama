@@ -32,8 +32,8 @@
                                     <th>Nama</th>
                                     <th>Alamat</th>
                                     <th>Kelompok</th>
-                                    <th>No_Hp</th>
-                                    <th>Nik</th>
+                                    <th>No. Handphone</th>
+                                    <th>NIK</th>
                                     <th>Foto</th>
                                     <th>Action</th>
                                 </tr>
