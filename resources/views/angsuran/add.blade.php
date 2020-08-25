@@ -25,11 +25,11 @@
                     @endif
                     <form action="{{route('store-angsuran')}}" method="post">@csrf
                         <div class="form-body">
-                            <div class="row  p-t-20">
+                            <div class="row p-t-20">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Transaksi</label>
-                                        <select style="height: 150%" class="select2 form-control" name="id_transaksi" required>
+                                        <select style="height: 150%" class="select form-control" name="id_transaksi" required>
                                             <option value="">Pilih Transaksi</option>
                                             @foreach ($transaksi as $val)
                                             <option value="{{$val->id}}">{{$val->nama}} - {{$val->nama_kelompok}} - {{$val->nama_produk}}</option>
@@ -37,12 +37,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Cicilan Ke</label>
-                                        <input min="1" type="number" name="cicilan_ke" class="form-control" spellcheck="false" value="{{ old('cicilan_ke') }}" placeholder="" required>
-                                    </div>
-                                </div> -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Jumlah Angsuran</label>
