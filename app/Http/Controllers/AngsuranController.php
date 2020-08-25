@@ -282,4 +282,20 @@ class AngsuranController extends Controller
     {
         Angsuran::destroy($id);
     }
+
+    public function scan()
+    {
+        $controller    = new Controller;
+        $data['menus'] = $controller->menus();
+
+        return view('angsuran.scan-qr-code', $data);
+    }
+
+    public function mobileView($id)
+    {
+        $controller    = new Controller;
+        $data['menus'] = $controller->menus();
+
+        return view('angsuran.angsuranmobile', $data);
+    }
 }

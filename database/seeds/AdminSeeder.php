@@ -36,6 +36,7 @@ class AdminSeeder extends Seeder
 
             ['nama_menu' => 'List Angsuran', 'parent_menu_id' => 5, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'list-angsuran', 'icon' => 'null', 'no_urut' => 1],
             ['nama_menu' => 'Tambah Angsuran', 'parent_menu_id' => 5, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'add-angsuran', 'icon' => 'null', 'no_urut' => 2],
+            ['nama_menu' => 'Scan QR-Code', 'parent_menu_id' => 5, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'scan-qr-code', 'icon' => 'null', 'no_urut' => 3],
 
             ['nama_menu' => 'List Margin Keuntungan', 'parent_menu_id' => 8, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'list-marginkeuntungan', 'icon' => 'null', 'no_urut' => 3],
             ['nama_menu' => 'Add Margin Keuntungan', 'parent_menu_id' => 8, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'add-marginkeuntungan', 'icon' => 'null', 'no_urut' => 4],
