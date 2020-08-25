@@ -51,6 +51,12 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Jumlah Pinjaman</label>
+                                        <input type="text" name="jumlah_pinjaman_pokok" class="form-control nominal" spellcheck="false" value="{{ old('jumlah_pinjaman_pokok') }}" placeholder="" required>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">

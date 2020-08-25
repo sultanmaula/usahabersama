@@ -51,6 +51,10 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-6">
+                    <label class="control-label" style="font-weight: bold;">Sisa Pinjaman</label>
+                    <div>{{$transaksi->sisa_pinjaman}}</div>
+                </div>
+                <div class="form-group col-md-6">
                     <label class="control-label" style="font-weight: bold;">Status</label>
                     <div>{{$transaksi->status}}</div>
                 </div>

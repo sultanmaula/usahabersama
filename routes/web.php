@@ -111,7 +111,3 @@ Route::post('/angsuran/update{id}', 'AngsuranController@update')->name('update-a
 Route::post('/angsuran/store', 'AngsuranController@store')->name('store-angsuran');
 Route::post('/angsuran/delete/{id}', 'AngsuranController@delete')->name('delete-angsuran');
 Route::get('/angsuran/detail/{id}', 'AngsuranController@detail')->name('detail-angsuran');
-
-Route::get('/angsuran/scan-qr-code', 'AngsuranController@scan')->name('scan-qr-code');
-Route::get('/angsuran/mobile-view/{id}', 'AngsuranController@mobileView')->name('mobile-view');
-
