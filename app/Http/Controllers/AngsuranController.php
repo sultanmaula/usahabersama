@@ -296,6 +296,16 @@ class AngsuranController extends Controller
         $controller    = new Controller;
         $data['menus'] = $controller->menus();
 
+        $data['nasabah'] = DB::table('nasabahs')->select('nasabahs.*', 'kelompoks.*', 'nasabahs.id as id_nasabah')->leftJoin('kelompoks', 'kelompoks.id', '=', 'nasabahs.id_kelompok')->where('nasabahs.id', $id)->get();
+
+        $data['transaksi'] = DB::table('transaksis')->select('transaksis.*', 'transaksis.id as id_transaksi')->leftJoin('angsurans', 'angsurans.id_transaksi', '=', 'transaksis.id')->where('id_nasabah', $id)->where('transaksis.status', 0)->get();
+
+        if ($data['transaksi']->isNotEmpty()) {
+            $data['angsuran'] = DB::table('angsurans')->where('id_transaksi', $data['transaksi'][0]->id_transaksi)->latest()->first();
+
+            $data['sisa_pinjaman_total'] = $data['angsuran']->sisa_pinjaman + $data['angsuran']->sisa_laba;
+        }
+
         return view('angsuran.angsuranmobile', $data);
     }
 }
