@@ -70,17 +70,8 @@ class TransaksiController extends Controller
             'nama_produk'           => 'required',
             'harga_produk'          => 'required',
             'id_nasabah'            => 'required',
+            'jumlah_pinjaman_pokok' => 'required',
         ]);
-
-
-        $data['harga_produk']            = intval(preg_replace('/\D/', '', $data['harga_produk']));
-
-        $jumlah_pinjaman_pokok = $data['harga_produk'];
-        $dp = 0;
-        if ($data['harga_produk'] >= 10000000) {
-            $dp = $data['harga_produk'] - 10000000;
-            $jumlah_pinjaman_pokok = 10000000;
-        }
 
         $tanggal = new Carbon($request->tanggal);
 
@@ -88,7 +79,8 @@ class TransaksiController extends Controller
         
         $jatuh_tempo = $tanggal->addYears(2); 
 
-        $data['total_pinjaman']          = intval(preg_replace('/\D/', '', $jumlah_pinjaman_pokok));
+        $data['harga_produk']            = intval(preg_replace('/\D/', '', $data['harga_produk']));
+        $data['total_pinjaman']          = intval(preg_replace('/\D/', '', $data['jumlah_pinjaman_pokok']));
         $data['sisa_pinjaman']           = $data['total_pinjaman'];
         $data['status']                  = 0;
         $data['angsuran_pokok']          = intval($data['total_pinjaman'] / 24);
@@ -96,9 +88,8 @@ class TransaksiController extends Controller
         $data['jumlah_cicilan']          = $data['angsuran_pokok'] + $data['angsuran_bagihasil'];
         $data['tanggal_jatuh_tempo']     = $jatuh_tempo;
         $data['tanggal']                 = $tanggal_transaksi;
-        $data['jumlah_pinjaman_pokok']   = $jumlah_pinjaman_pokok;
-        $data['dp']                      = $dp;
-        $data['jumlah_pinjaman_laba']    = $jumlah_pinjaman_pokok * $this->prosentase / 100;
+        $data['jumlah_pinjaman_pokok']   = intval(preg_replace('/\D/', '', $data['jumlah_pinjaman_pokok']));
+        $data['jumlah_pinjaman_laba']    = $data['jumlah_pinjaman_pokok'] * $this->prosentase / 100;
 
         Transaksi::create($data);
         
