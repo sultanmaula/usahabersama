@@ -157,22 +157,41 @@ class AngsuranController extends Controller
             $total_sisa_keseluruhan = $total_pinjaman_keseluruhan;
         }
 
-        $mod = floor($jml_angsuran/$total_angsuran_bulanan);
+        $mod = $jml_angsuran/$total_angsuran_bulanan;
 
         if ($mod <= 0) {
             if ($jml_angsuran <= $pokok) {
-                $angsuran_laba = $mod*$laba;
+                $angsuran_laba = floor($mod)*$laba;
+                $sisa_pinjaman_pokok = $jumlah_pinjaman_pokok-$total_cicilan_terbayar;
+                $angsuran_pokok = $jml_angsuran - $angsuran_laba;
+
+                if ($sisa_pinjaman_pokok < $angsuran_pokok) {
+                    $angsuran_laba = $jml_angsuran - $sisa_pinjaman_pokok;
+                    // $sisa_pinjaman = $sisa_pinjaman_pokok-$angsuran_pokok;
+                    $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
+                } else {
+                    $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
+                }
             } else {
                 $angsuran_laba = $jml_angsuran - $pokok;
+                $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
             }
-
-            $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
         
         } else {
             if ($jml_angsuran < $total_sisa_keseluruhan) {
-                $angsuran_laba = $mod*$laba;
 
-                $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
+                $angsuran_laba = floor($mod)*$laba;
+                $sisa_pinjaman_pokok = $jumlah_pinjaman_pokok-$total_cicilan_terbayar;
+                $angsuran_pokok = $jml_angsuran - $angsuran_laba;
+
+                if ($sisa_pinjaman_pokok < $angsuran_pokok) {
+                    $angsuran_laba = $jml_angsuran - $sisa_pinjaman_pokok;
+                    // $sisa_pinjaman = $sisa_pinjaman_pokok-$angsuran_pokok;
+                    $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
+                } else {
+                    $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
+                }
+
             } else {
                 $angsuran_laba = $sisa_pinjaman_keuntungan;
                 $sisa_pinjaman_laba = 0;
@@ -180,9 +199,16 @@ class AngsuranController extends Controller
         }
 
         if ($jml_angsuran <= $total_sisa_keseluruhan) {
+            $sisa_pinjaman_pokok = $jumlah_pinjaman_pokok-$total_cicilan_terbayar;
             $angsuran_pokok = $jml_angsuran - $angsuran_laba;
 
-            $sisa_pinjaman = ($jumlah_pinjaman_pokok-$total_cicilan_terbayar)-$angsuran_pokok;
+            if ($sisa_pinjaman_pokok < $angsuran_pokok) {
+                $angsuran_pokok = $sisa_pinjaman_pokok;
+                $sisa_pinjaman = $sisa_pinjaman_pokok-$angsuran_pokok;
+            } else {
+                $sisa_pinjaman =  $sisa_pinjaman_pokok-$angsuran_pokok;
+            }
+
         } else {
             $angsuran_pokok = $sisa_pinjaman_pokok;
             $sisa_pinjaman = 0;
@@ -298,14 +324,159 @@ class AngsuranController extends Controller
 
         $data['nasabah'] = DB::table('nasabahs')->select('nasabahs.*', 'kelompoks.*', 'nasabahs.id as id_nasabah')->leftJoin('kelompoks', 'kelompoks.id', '=', 'nasabahs.id_kelompok')->where('nasabahs.id', $id)->get();
 
-        $data['transaksi'] = DB::table('transaksis')->select('transaksis.*', 'transaksis.id as id_transaksi')->leftJoin('angsurans', 'angsurans.id_transaksi', '=', 'transaksis.id')->where('id_nasabah', $id)->where('transaksis.status', 0)->get();
+        $data['transaksi'] = DB::table('transaksis')->select('transaksis.*', 'transaksis.id as id_transaksi')->where('id_nasabah', $id)->where('transaksis.status', 0)->get();
 
+        $data['id_transaksi'] = 0;
         if ($data['transaksi']->isNotEmpty()) {
+            $data['id_transaksi'] =  $data['transaksi'][0]->id_transaksi;
+
             $data['angsuran'] = DB::table('angsurans')->where('id_transaksi', $data['transaksi'][0]->id_transaksi)->latest()->first();
 
-            $data['sisa_pinjaman_total'] = $data['angsuran']->sisa_pinjaman + $data['angsuran']->sisa_laba;
+            if (!empty($data['angsuran'])) {
+                $data['sisa_pinjaman_total'] = $data['angsuran']->sisa_pinjaman + $data['angsuran']->sisa_laba;
+            }
         }
+
+        
 
         return view('angsuran.angsuranmobile', $data);
     }
+
+    public function storeMobileView(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+
+        $request->validate([
+            'jml_angsuran'  => 'required'
+        ]);
+
+        $jml_angsuran   = intval(preg_replace('/\D/', '', $request->jml_angsuran));
+        $prosentase     = MarginKeuntungan::pluck('prosentase')->first();
+        $transaksi      = Transaksi::find($request->id_transaksi);
+
+        $total_pinjaman         = $transaksi->total_pinjaman;
+        $total_angsuran_bulanan = $transaksi->jumlah_cicilan;    
+        $pokok                  = $transaksi->angsuran_pokok;
+        $laba                   = $transaksi->angsuran_bagihasil;
+        $jumlah_pinjaman_laba   = $transaksi->jumlah_pinjaman_laba;
+        $jumlah_pinjaman_pokok  = $transaksi->jumlah_pinjaman_pokok;
+
+        $sum_cicilan_terbayar = DB::table('angsurans')
+                                    ->select(DB::raw('SUM(angsuran_pokok) as sum_angsuran_terbayar'))
+                                    ->where('id_transaksi', $request->id_transaksi)
+                                    ->pluck('sum_angsuran_terbayar');
+
+        $sum_cicilan_laba_terbayar = DB::table('angsurans')
+                                    ->select(DB::raw('SUM(angsuran_laba) as sum_angsuran_laba_terbayar'))
+                                    ->where('id_transaksi', $request->id_transaksi)
+                                    ->pluck('sum_angsuran_laba_terbayar');
+
+        $total_cicilan_terbayar = $sum_cicilan_terbayar[0];
+        $total_cicilan_laba_terbayar = $sum_cicilan_laba_terbayar[0];
+
+        if (empty($total_cicilan_terbayar)) {
+            $total_cicilan_terbayar = 0;
+        }
+
+        if (empty($total_cicilan_laba_terbayar)) {
+            $total_cicilan_laba_terbayar = 0;
+        }
+
+        $sisa_pinjaman_pokok = ($jumlah_pinjaman_pokok-$total_cicilan_terbayar);
+        $sisa_pinjaman_keuntungan = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar);
+
+        $total_sisa_keseluruhan = $sisa_pinjaman_pokok+$sisa_pinjaman_keuntungan;
+        $total_pinjaman_keseluruhan =  $jumlah_pinjaman_pokok+$jumlah_pinjaman_laba;
+
+        if ($total_cicilan_terbayar == 0) {
+            $total_sisa_keseluruhan = $total_pinjaman_keseluruhan;
+        }
+
+        $mod = $jml_angsuran/$total_angsuran_bulanan;
+
+        if ($mod <= 0) {
+            if ($jml_angsuran <= $pokok) {
+                $angsuran_laba = floor($mod)*$laba;
+                $sisa_pinjaman_pokok = $jumlah_pinjaman_pokok-$total_cicilan_terbayar;
+                $angsuran_pokok = $jml_angsuran - $angsuran_laba;
+
+                if ($sisa_pinjaman_pokok < $angsuran_pokok) {
+                    $angsuran_laba = $jml_angsuran - $sisa_pinjaman_pokok;
+                    // $sisa_pinjaman = $sisa_pinjaman_pokok-$angsuran_pokok;
+                    $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
+                } else {
+                    $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
+                }
+            } else {
+                $angsuran_laba = $jml_angsuran - $pokok;
+                $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
+            }
+        
+        } else {
+            if ($jml_angsuran < $total_sisa_keseluruhan) {
+
+                $angsuran_laba = floor($mod)*$laba;
+                $sisa_pinjaman_pokok = $jumlah_pinjaman_pokok-$total_cicilan_terbayar;
+                $angsuran_pokok = $jml_angsuran - $angsuran_laba;
+
+                if ($sisa_pinjaman_pokok < $angsuran_pokok) {
+                    $angsuran_laba = $jml_angsuran - $sisa_pinjaman_pokok;
+                    // $sisa_pinjaman = $sisa_pinjaman_pokok-$angsuran_pokok;
+                    $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
+                } else {
+                    $sisa_pinjaman_laba = ($jumlah_pinjaman_laba-$total_cicilan_laba_terbayar) - $angsuran_laba;
+                }
+
+            } else {
+                $angsuran_laba = $sisa_pinjaman_keuntungan;
+                $sisa_pinjaman_laba = 0;
+            }
+        }
+
+        if ($jml_angsuran <= $total_sisa_keseluruhan) {
+            $sisa_pinjaman_pokok = $jumlah_pinjaman_pokok-$total_cicilan_terbayar;
+            $angsuran_pokok = $jml_angsuran - $angsuran_laba;
+
+            if ($sisa_pinjaman_pokok < $angsuran_pokok) {
+                $angsuran_pokok = $sisa_pinjaman_pokok;
+                $sisa_pinjaman = $sisa_pinjaman_pokok-$angsuran_pokok;
+            } else {
+                $sisa_pinjaman =  $sisa_pinjaman_pokok-$angsuran_pokok;
+            }
+
+        } else {
+            $angsuran_pokok = $sisa_pinjaman_pokok;
+            $sisa_pinjaman = 0;
+            $jml_angsuran = $total_sisa_keseluruhan;
+        }
+
+        $angsura_ke = DB::table('angsurans')->where('id_transaksi', $request->id_transaksi)->latest()->pluck('cicilan_ke');
+
+        if ($angsura_ke->isNotEmpty()) {
+            $angsuran_ke = $angsura_ke[0]+1;
+        } else {
+            $angsuran_ke = 1;
+        }
+
+        DB::table('angsurans')->insert([
+            'id_transaksi' => $request->id_transaksi,
+            'cicilan_ke' => $angsuran_ke,
+            'jml_angsuran' => $jml_angsuran,
+            'sisa_pinjaman' => $sisa_pinjaman,
+            'tanggal' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'angsuran_pokok' => $angsuran_pokok,
+            'angsuran_laba' => $angsuran_laba,
+            'sisa_laba' => $sisa_pinjaman_laba
+        ]);
+
+        if ($sisa_pinjaman == 0 && $sisa_pinjaman_laba == 0) {
+            DB::table('transaksis')->where('id', $request->id_transaksi)->update(['status' => 1]);
+            DB::table('angsurans')->where('id_transaksi', $request->id_transaksi)->update(['status' => 1]);
+        }
+
+        return redirect('angsuran/mobile-view/'.$request->id_nasabah);
+
+    }
+
 }

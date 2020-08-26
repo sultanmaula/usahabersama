@@ -54,6 +54,10 @@
                     <label class="control-label" style="font-weight: bold;">Status</label>
                     <div>{{$transaksi->status}}</div>
                 </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label" style="font-weight: bold;">DP</label>
+                    <div>{{$transaksi->dp}}</div>
+                </div>
             </div>
             <div class="form-group mt-5">
                 <a href="{{route('list-transaksi')}}" class="btn btn-info">Kembali</a>
