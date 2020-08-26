@@ -118,6 +118,7 @@ class TransaksiController extends Controller
         $data['transaksi']->jumlah_cicilan = 'Rp. ' . number_format($data['transaksi']->jumlah_cicilan, 0, ",", ".");
         $data['transaksi']->sisa_pinjaman  = 'Rp. ' . number_format($data['transaksi']->sisa_pinjaman, 0, ",", ".");
         $data['transaksi']->jumlah_pinjaman   = 'Rp. ' . number_format($data['transaksi']->jumlah_pinjaman_pokok+$data['transaksi']->jumlah_pinjaman_laba, 0, ",", ".");
+        $data['transaksi']->dp             = 'Rp. ' . number_format($data['transaksi']->dp, 0, ",", ".");
 
         return view('transaksi.detail', $data);
     }
