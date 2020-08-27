@@ -53,7 +53,7 @@ class NasabahController extends Controller
         $data['menus'] = $controller->menus();
         $data['groups'] = Kelompok::all();
     
-        return view('nasabah/addNasabah', $data);
+        return view('nasabah/addnasabah', $data);
     }
 
     public function storeNasabah(Request $request){
