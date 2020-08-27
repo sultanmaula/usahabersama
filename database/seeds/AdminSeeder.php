@@ -22,7 +22,6 @@ class AdminSeeder extends Seeder
             ['nama_menu' => 'Transaksi', 'parent_menu_id' => 0, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 4, 'slug' => 'transaksi', 'icon' => 'fas fa-exchange-alt', 'no_urut' => 4],
             ['nama_menu' => 'Angsuran', 'parent_menu_id' => 0, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 5, 'slug' => 'angsuran', 'icon' => 'fas fa-money-bill-wave', 'no_urut' => 5],
             ['nama_menu' => 'Master', 'parent_menu_id' => 0, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 8, 'slug' => 'master', 'icon' => 'fas fa-database', 'no_urut' => 8],
-            ['nama_menu' => 'Logs', 'parent_menu_id' => 0, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 14, 'slug' => 'logs', 'icon' => 'fa fa-history', 'no_urut' => 15],
 
             ['nama_menu' => 'List Nasabah', 'parent_menu_id' => 2, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'list-nasabah', 'icon' => 'null', 'no_urut' => 1],
             ['nama_menu' => 'Tambah Nasabah', 'parent_menu_id' => 2, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'add-nasabah', 'icon' => 'null', 'no_urut' => 2],
@@ -44,8 +43,6 @@ class AdminSeeder extends Seeder
             ['nama_menu' => 'Tambah Admin', 'parent_menu_id' => 3, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'add-admin', 'icon' => 'null', 'no_urut' => 1],
             ['nama_menu' => 'List Admin', 'parent_menu_id' => 3, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'list-admin', 'icon' => 'null', 'no_urut' => 2],
             ['nama_menu' => 'Role Admin', 'parent_menu_id' => 3, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'role-admin', 'icon' => 'null', 'no_urut' => 3],
-
-            ['nama_menu' => 'Logs Admin', 'parent_menu_id' => 14, 'created_at' => date('Y-m-d H:m:s'), 'updated_at' => date('Y-m-d H:m:s'), 'menu_id' => 0, 'slug' => 'logs_admin', 'icon' => 'null', 'no_urut' => 1],
         ]);
         date_default_timezone_set('Asia/Jakarta');
         // seeder departement

@@ -132,7 +132,7 @@ class RoleController extends Controller
                 );
             }
         }
-        admin_logs::addLogs("UPD-002", "Role Admin");
+        // admin_logs::addLogs("UPD-002", "Role Admin");
 
         return redirect()->route('role-admin');
     }
