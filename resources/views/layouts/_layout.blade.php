@@ -61,7 +61,7 @@
                             <!-- Dark Logo icon -->
                             <img src="{{URL::asset('assets')}}/images/logo-icon.png" alt="homepage" class="dark-logo" />
                             <!-- Light Logo icon -->
-                            <img src="{{URL::asset('assets')}}/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                            <!-- <img src="{{URL::asset('assets')}}/images/logo-light-icon.png" alt="homepage" class="light-logo" /> -->
                         </b>
                         <!--End Logo icon -->
                         <span class="hidden-xs"><span class="font-bold">Usaha </span>Bersama</span>
