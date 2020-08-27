@@ -9,7 +9,7 @@ class admin_logs {
         date_default_timezone_set("Asia/Jakarta");
         DB::table('log_admins')->insert([
             'id_admin' => Auth::id(),
-            'id_aktifitas' => $id_act,
+            'aktifitas' => $id_act,
             'modul' => $modul,
             'created_at' =>  date('Y-m-d H:i:s'),
             'updated_at' =>  date('Y-m-d H:i:s')
