@@ -51,12 +51,12 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Tanggal</label>
-                                    <input autocomplete="off" type="text" name="tanggal" class="form-control date" value="{{ old('tanggal') }}" required>
-                                    </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Tanggal</label>
+                                        <input autocomplete="off" type="text" name="tanggal" class="form-control date" value="{{ old('tanggal') }}" required>
+                                        </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-actions m-t-20">
