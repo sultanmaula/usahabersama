@@ -112,7 +112,6 @@ class AngsuranController extends Controller
             'id_transaksi'  => 'required',
             'jml_angsuran'  => 'required',
             'tanggal'       => 'required',
-            'keterangan'    => 'required',
         ]);
 
         $jml_angsuran   = intval(preg_replace('/\D/', '', $request->jml_angsuran));
