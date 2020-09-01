@@ -21,8 +21,11 @@
 
 	function listcamera() {
 		Html5Qrcode.getCameras().then(cameras => {
-			if (cameras && cameras.length) {
+			if (cameras[1] == null) {
 				cameraId = cameras[0].id;
+				scan(cameraId);
+			} else {
+				cameraId = cameras[1].id;
 				scan(cameraId);
 			}
 			
