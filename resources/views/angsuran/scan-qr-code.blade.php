@@ -10,7 +10,8 @@
 	<div class="card">
 		<div class="card-body">
 			<div class="row">
-				<video class="col-md-6" style="margin: 0 auto;" id="preview"></video>
+				<meta name="apple-mobile-web-app-capable" content="yes">
+					<video class="col-md-6 video-back" style="margin: 0 auto;" id="preview" playsinline></video>
 			</div>
 		</div>
 	</div>
@@ -20,6 +21,7 @@
 <script src="/js/html5-qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 
 <script>
 	function onScanSuccess(qrCodeMessage) {
@@ -48,5 +50,5 @@
       }).catch(function (e) {
         console.error(e);
       });
-    </script>
+</script>
 @endsection
