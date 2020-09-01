@@ -37,27 +37,30 @@
 	}
 
 	function scan(cameraId) {
-	const html5Qr = new Html5Qrcode("reader");
+		const html5Qr = new Html5Qrcode("reader");
 
-	html5Qr.start(
-	cameraId, // retreived in the previous step.
-	   {
-	      fps: 10,    // sets the framerate to 10 frame per second 
-	      qrbox: 250  // sets only 250 X 250 region of viewfinder to
-	                  // scannable, rest shaded.
-	 },
-	 qrCodeMessage => {     // do something when code is read. For example:
-	    window.location.replace('/angsuran/mobile-view/'+qrCodeMessage);
-	    html5Qr.clear();
-	    html5Qr.stop();
-	 },
-	 errorMessage => {     // parse error, ideally ignore it. For example:
-	     console.log(`QR Code no longer in front of camera.`);
-	 })
-	 .catch(err => {     // Start failed, handle it. For example, 
-	     console.log(`Unable to start scanning, error: ${err}`);
-	 });
-	
+		html5Qr.start(
+		cameraId, // retreived in the previous step.
+		   {
+		      fps: 10,    // sets the framerate to 10 frame per second 
+		      qrbox: 250  // sets only 250 X 250 region of viewfinder to
+		                  // scannable, rest shaded.
+		 },
+		 qrCodeMessage => {     // do something when code is read. For example:
+		    window.location.replace('/angsuran/mobile-view/'+qrCodeMessage);
+
+		    html5Qr.stop().then(ignore => {
+			  // QR Code scanning is stopped.
+			}).catch(err => {
+			  // Stop failed, handle it.
+			});
+		 },
+		 errorMessage => {     // parse error, ideally ignore it. For example:
+		     console.log(`QR Code no longer in front of camera.`);
+		 })
+		.catch(err => {     // Start failed, handle it. For example, 
+		     console.log(`Unable to start scanning, error: ${err}`);
+		});
 	}
 </script>
 
