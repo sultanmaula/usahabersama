@@ -7,8 +7,10 @@
 			<div class="row">
 				<div style="margin: 0 auto;" id="reader"></div>
 			</div>
-			<div class="row mt-3">
-				<button type="button" onclick="listcamera()">Pilih kamera</button>
+			<div class="row">
+				<div style="margin: 0 auto;">
+					<button class="btn-sm btn-info mt-2" type="button" onclick="listcamera()">Mulai Scan</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -18,7 +20,6 @@
 <script src="/js/html5-qrcode.min.js"></script>
 
 <script type="text/javascript">
-
 	function listcamera() {
 		Html5Qrcode.getCameras().then(cameras => {
 			if (cameras[1] == null) {
@@ -37,15 +38,18 @@
 
 	function scan(cameraId) {
 	const html5Qr = new Html5Qrcode("reader");
+
 	html5Qr.start(
-	   cameraId, // retreived in the previous step.
+	cameraId, // retreived in the previous step.
 	   {
 	      fps: 10,    // sets the framerate to 10 frame per second 
 	      qrbox: 250  // sets only 250 X 250 region of viewfinder to
 	                  // scannable, rest shaded.
 	 },
 	 qrCodeMessage => {     // do something when code is read. For example:
-	     window.location.replace('/angsuran/mobile-view/'+qrCodeMessage);
+	    window.location.replace('/angsuran/mobile-view/'+qrCodeMessage);
+	    html5Qr.clear();
+	    html5Qr.stop();
 	 },
 	 errorMessage => {     // parse error, ideally ignore it. For example:
 	     console.log(`QR Code no longer in front of camera.`);
@@ -53,6 +57,7 @@
 	 .catch(err => {     // Start failed, handle it. For example, 
 	     console.log(`Unable to start scanning, error: ${err}`);
 	 });
+	
 	}
 </script>
 
