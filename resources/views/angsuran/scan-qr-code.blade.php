@@ -1,5 +1,4 @@
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 @extends('layouts._layout')
 @section('content')
 <div class="container-fluid">
@@ -8,27 +7,50 @@
 			<div class="row">
 				<div style="margin: 0 auto;" id="reader"></div>
 			</div>
+			<div class="row mt-3">
+				<button type="button" onclick="listcamera()">Pilih kamera</button>
+			</div>
 		</div>
 	</div>
 </div>
 @endsection
 @section('script')
 <script src="/js/html5-qrcode.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
-<script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
-<script>
-	function onScanSuccess(qrCodeMessage) {
-		html5QrcodeScanner.clear();
-		window.location.replace('/angsuran/mobile-view/'+qrCodeMessage);
+<script type="text/javascript">
+
+	function listcamera() {
+		Html5Qrcode.getCameras().then(cameras => {
+			if (cameras && cameras.length) {
+				cameraId = cameras[0].id;
+				scan(cameraId);
+			}
+			
+		}).catch(err => {
+				// handle err 
+					alert(err);
+		});
 	}
 
-	var html5QrcodeScanner = new Html5QrcodeScanner(
-		"reader", { fps: 10, qrbox: 250 });
-	html5QrcodeScanner.render(onScanSuccess);
-
+	function scan(cameraId) {
+	const html5Qr = new Html5Qrcode("reader");
+	html5Qr.start(
+	   cameraId, // retreived in the previous step.
+	   {
+	      fps: 10,    // sets the framerate to 10 frame per second 
+	      qrbox: 250  // sets only 250 X 250 region of viewfinder to
+	                  // scannable, rest shaded.
+	 },
+	 qrCodeMessage => {     // do something when code is read. For example:
+	     window.location.replace('/angsuran/mobile-view/'+qrCodeMessage);
+	 },
+	 errorMessage => {     // parse error, ideally ignore it. For example:
+	     console.log(`QR Code no longer in front of camera.`);
+	 })
+	 .catch(err => {     // Start failed, handle it. For example, 
+	     console.log(`Unable to start scanning, error: ${err}`);
+	 });
+	}
 </script>
 
 @endsection
