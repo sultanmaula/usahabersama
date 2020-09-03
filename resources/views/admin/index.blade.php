@@ -30,7 +30,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Name</th>
+                                    <th>Nama</th>
                                     <th>No. HP</th>
                                     <th>Email</th>
                                     <th>Role</th>
@@ -38,22 +38,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($admins as $admin)
+                                @foreach ($admins as $admin)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{$admin->name}}</td>
-                                        <td>{{$admin->nik}}</td>
-                                        <td>{{$admin->nip}}</td>
+                                        <td>{{$admin->nama}}</td>
+                                        <td>{{$admin->no_hp}}</td>
                                         <td>{{$admin->email}}</td>
                                         <td>{{$admin->role_name}}</td>
-                                        <td>{{$admin->status}}</td>
                                         <td>
                                             <a href="{{route('edit-admin', $admin->id)}}" class="btn btn-xs btn-primary " type="button"><span class="btn-label"><i class="fa fa-file"></i></span></a>
-                                            <button class="btn btn-xs btn-danger delete-button" deletevalue="{{$admin->id}}" type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button>
+                                            <button class="btn btn-xs btn-danger" data-record-id="{{$admin->id}}" data-toggle="modal" type="button" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>
                                             <a href="{{route('show-admin', $admin->id)}}" class="btn btn-xs btn-warning " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></a>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -104,37 +102,38 @@
             $modalDiv.addClass('loading');
             setTimeout(function() {
                 $modalDiv.modal('hide').removeClass('loading');
-                $('#config-table').DataTable().ajax.reload();
+                location.reload();
             })
         });
+    
     $('#confirm-delete').on('show.bs.modal', function(e) {
         var data = $(e.relatedTarget).data();
         $('.title', this).text(data.recordTitle);
         $('.btn-ok', this).data('recordId', data.recordId);
     });
 
-    $(document).ready(function() {
-        var i=0;
-        var table=$('#config-table').DataTable({
-            processing: true,
-            serverSide: true,
-            "ajax": "{{ route('list-admin-index') }}",
-            columns: [
-            {
-            "data": null,"sortable": false,
-            render: function (data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                }
+    // $(document).ready(function() {
+    //     var i=0;
+    //     var table=$('#config-table').DataTable({
+    //         processing: true,
+    //         serverSide: true,
+    //         "ajax": "{{ route('list-admin-index') }}",
+    //         columns: [
+    //         {
+    //         "data": null,"sortable": false,
+    //         render: function (data, type, row, meta) {
+    //                     return meta.row + meta.settings._iDisplayStart + 1;
+    //             }
 
-            },
-            {data: 'nama', name: 'nama'},
-            {data: 'no_hp', name: 'no_hp'},
-            {data: 'email', name: 'email'},
-            {data: 'role_name', name: 'role_name'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-            ],
-        });
-    });
+    //         },
+    //         {data: 'nama', name: 'nama'},
+    //         {data: 'no_hp', name: 'no_hp'},
+    //         {data: 'email', name: 'email'},
+    //         {data: 'role_name', name: 'role_name'},
+    //         {data: 'action', name: 'action', orderable: false, searchable: false},
+    //         ],
+    //     });
+    // });
     $(document).ready(function() {
         $("#id_role").change(function() {
             var role = $("#id_role").val();

@@ -18,6 +18,23 @@ class AngsuranController extends Controller
     function list() {
         $controller    = new Controller;
         $data['menus'] = $controller->menus();
+        
+        $data['transaksi'] = DB::table('transaksis')->get();
+
+        $array_angsuran = [];
+        foreach ($data['transaksi'] as $transaksi) {
+            $data_angsurans = DB::table('angsurans')
+                                    ->where('id_transaksi', $transaksi->id)
+                                    ->orderBy('cicilan_ke', 'desc')
+                                    ->limit(1)
+                                    ->get();
+
+            if ($data_angsurans->isNotEmpty()) {
+                $array_angsuran[] = $data_angsurans;
+            }
+        }
+
+        $data['angsurans'] = $array_angsuran;
 
         return view('angsuran.index', $data);
     }
@@ -46,46 +63,6 @@ class AngsuranController extends Controller
         $transaksi->status         = ($transaksi->status == 1) ? 'LUNAS' : 'BELUM LUNAS';
 
         return $transaksi;
-    }
-
-    public function get_list()
-    {
-        $data_transaksi = DB::table('transaksis')->get();
-
-        $array_angsuran = [];
-        foreach ($data_transaksi as $transaksi) {
-            $data_angsurans = DB::table('angsurans')
-                                    ->where('id_transaksi', $transaksi->id)
-                                    ->orderBy('cicilan_ke', 'desc')
-                                    ->limit(1)
-                                    ->get();
-
-            if ($data_angsurans->isNotEmpty()) {
-                $array_angsuran[] = $data_angsurans;
-            }
-        }
-
-        return datatables()->of($array_angsuran)
-            ->addColumn('status', function ($data) {
-                return ($data[0]->status == 1) ? 'Lunas' : 'Belum Lunas';
-            })
-            ->addColumn('transaksi', function ($data) {
-                $trans     = self::list_transaksi($data[0]->id_transaksi);
-                $transaksi = $trans->nama . ' - ' . $trans->nama_kelompok . ' - ' . $trans->nama_produk;
-                return $transaksi;
-            })->addColumn('cicilan_ke', function ($data) {
-                return $data[0]->cicilan_ke;
-            })->addColumn('tanggal', function ($data) {
-                return $data[0]->tanggal;
-            })
-            ->addColumn('action', function ($data) {
-                $button = "&nbsp";
-                $button .= '<a href=' . route("detail-angsuran", $data[0]->id) . ' class="btn btn-xs btn-warning " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></a>';
-                $button .= "&nbsp";
-
-                return $button;
-            })
-            ->rawColumns(['action'])->make(true);
     }
 
     public function add()

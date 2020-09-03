@@ -31,6 +31,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $i=0;?>
+                                @foreach ($transaksi as $t)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $t->nama_produk }}</td>
+                                    <td>{{ $angsurans[$i][0]->cicilan_ke }}</td>
+                                    <td>{{ $t->tanggal }}</td>
+                                    <td>
+                                        @if ($t->status == 1)
+                                            Lunas
+                                        @else
+                                            Belum Lunas
+                                        @endif
+                                    </td>
+                                    <td><a href='{{route("detail-angsuran", $angsurans[$i][0]->id)}}' class="btn btn-xs btn-warning " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></a></td>
+                                </tr>
+                                <?php $i++;?>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -85,27 +103,5 @@ $('#confirm-delete').on('show.bs.modal', function(e) {
     $('.btn-ok', this).data('recordId', data.recordId);
 });
 
-$(document).ready(function() {
-    var i = 0;
-    var table = $('#config-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('list-angsuran-get') }}",
-        columns: [{
-                data: null,
-                sortable: false,
-                render: function(data, type, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1;
-                }
-
-            },
-            { data: 'transaksi' },
-            { data: 'cicilan_ke' },
-            { data: 'tanggal' },
-            { data: 'status' },
-            { data: 'action', name: 'action', orderable: false, searchable: false },
-        ],
-    });
-});
 </script>
 @endsection

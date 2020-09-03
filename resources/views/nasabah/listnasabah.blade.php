@@ -39,7 +39,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                                @foreach($nasabah as $n)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $n->nama }}</td>
+                                    <td>{{ $n->alamat }}</td>
+                                    <td>{{ $n->nama_kelompok }}</td>
+                                    <td>{{ $n->no_hp }}</td>
+                                    <td>{{ $n->nik }}</td>
+                                    <td>{{ $n->foto }}</td>
+                                    <td>
+                                        <button class="btn btn-xs btn-danger" data-record-id="{{$n->id}}" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>
+                                        <a href='{{route("detail-nasabah", $n->id)}}' class="btn btn-xs btn-warning " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></a>
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -95,7 +109,7 @@
             $modalDiv.addClass('loading');
             setTimeout(function() {
                 $modalDiv.modal('hide').removeClass('loading');
-                $('#nasabah-table').DataTable().ajax.reload();
+                location.reload();
             })
         });
 
@@ -105,34 +119,34 @@
             $('.btn-ok', this).data('recordId', data.recordId);
         });
         
-        var today_table = $('#nasabah-table').DataTable({
-            processing: true,
-            serverSide: true,
-            "ajax": "{{ route('list-nasabah-get') }}",
-            columnDefs: [{
-                targets: [0, 1, 2],
-                className: 'mdl-data-table__cell--non-numeric'
-            }],
-            columns: [{
-                    "data": null,
-                    "sortable": false,
-                    render: function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
-                { data: 'nama', name: 'nama' },
-                { data: 'alamat', name: 'alamat' },
-                { data: 'nama_kelompok', name: 'nama_kelompok' },
-                { data: 'no_hp', name: 'no_hp' },
-                { data: 'nik', name: 'nik' },
-                { data: 'foto', name: 'foto',
-                    render: function( data, type, full, meta ) {
-                        return "<img src=\"/nasabah_image/" + data + "\" height=\"50\"/>";
-                    }
-                },
-                { data: 'action', name: 'action' },
-            ],
-        });
+        // var today_table = $('#nasabah-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     "ajax": "{{ route('list-nasabah-get') }}",
+        //     columnDefs: [{
+        //         targets: [0, 1, 2],
+        //         className: 'mdl-data-table__cell--non-numeric'
+        //     }],
+        //     columns: [{
+        //             "data": null,
+        //             "sortable": false,
+        //             render: function(data, type, row, meta) {
+        //                 return meta.row + meta.settings._iDisplayStart + 1;
+        //             }
+        //         },
+        //         { data: 'nama', name: 'nama' },
+        //         { data: 'alamat', name: 'alamat' },
+        //         { data: 'nama_kelompok', name: 'nama_kelompok' },
+        //         { data: 'no_hp', name: 'no_hp' },
+        //         { data: 'nik', name: 'nik' },
+        //         { data: 'foto', name: 'foto',
+        //             render: function( data, type, full, meta ) {
+        //                 return "<img src=\"/nasabah_image/" + data + "\" height=\"50\"/>";
+        //             }
+        //         },
+        //         { data: 'action', name: 'action' },
+        //     ],
+        // });
       
         
     });

@@ -21,15 +21,18 @@ class NasabahController extends Controller
         $controller    = new Controller;
         $data['menus'] = $controller->menus();
     
-        return view('nasabah/listnasabah', $data);
-    }
-
-    public function listNasabahGet(){
-        $datalist = DB::table('nasabahs as n')->select('n.id','n.nama','n.alamat','k.nama_kelompok','n.no_hp','n.nik','n.foto')
+        $data['nasabah'] = DB::table('nasabahs as n')->select('n.id','n.nama','n.alamat','k.nama_kelompok','n.no_hp','n.nik','n.foto')
         ->leftJoin('kelompoks as k', 'k.id', '=', 'n.id_kelompok')
         ->whereNull('n.deleted_at')
         ->whereNull('k.deleted_at')
         ->get();
+
+        // dd($data['nasabah']);
+        
+        return view('nasabah/listnasabah', $data);
+    }
+
+    public function listNasabahGet(){
         $data = datatables()->of($datalist)
             ->addColumn('action',function ($data){ 
                 $button ='<a href="/nasabah/edit/'.$data->id.'">
@@ -37,9 +40,9 @@ class NasabahController extends Controller
                 <span class="btn-label"><i class="fa fa-file"></i></span>
                 </button>
                 </a>';
-                $button.='<button class="btn btn-xs btn-danger" data-record-id="'.$data->id.'" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>';
+                $button.='';
                 $button.='&nbsp';
-                $button .= '<a href=' . route("detail-nasabah", $data->id) . ' class="btn btn-xs btn-warning " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></a>';
+                $button .= '';
                 $button .= "&nbsp";
                 return $button;
             })->rawColumns(['action'])->make(true);

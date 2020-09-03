@@ -32,6 +32,25 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($transaksis as $t)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $t->nama }}</td>
+                                    <td>{{ $t->nama_produk }}</td>
+                                    <td>
+                                        @if($t->status == 1)
+                                            Lunas
+                                        @else
+                                            Belum Lunas
+                                        @endif
+                                    </td>
+                                    <td>{{ $t->tanggal }}</td>
+                                    <td>{{ $t->tanggal_jatuh_tempo }}</td>
+                                    <td>
+                                        <button class="btn btn-xs btn-danger" data-record-id="{{$t->id}}" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>
+                                        <a href='{{route("detail-transaksi", $t->id)}}' class="btn btn-xs btn-warning " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></a></td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -77,7 +96,7 @@ $('#confirm-delete').on('click', '.btn-ok', function(e) {
     $modalDiv.addClass('loading');
     setTimeout(function() {
         $modalDiv.modal('hide').removeClass('loading');
-        $('#config-table').DataTable().ajax.reload();
+        location.reload();
     })
 });
 $('#confirm-delete').on('show.bs.modal', function(e) {
@@ -86,27 +105,27 @@ $('#confirm-delete').on('show.bs.modal', function(e) {
     $('.btn-ok', this).data('recordId', data.recordId);
 });
 
-$(document).ready(function() {
-    var i = 0;
-    var table = $('#config-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('list-transaksi-get') }}",
-        columns: [{
-                data: null,
-                sortable: false,
-                render: function(data, type, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1;
-                }
-            },
-            { data: 'nama_nasabah' },
-            { data: 'nama_produk' },
-            { data: 'status' },
-            { data: 'tanggal' },
-            { data: 'tanggal_jatuh_tempo' },
-            { data: 'action', name: 'action', orderable: false, searchable: false },
-        ],
-    });
-});
+// $(document).ready(function() {
+//     var i = 0;
+//     var table = $('#config-table').DataTable({
+//         processing: true,
+//         serverSide: true,
+//         ajax: "{{ route('list-transaksi-get') }}",
+//         columns: [{
+//                 data: null,
+//                 sortable: false,
+//                 render: function(data, type, row, meta) {
+//                     return meta.row + meta.settings._iDisplayStart + 1;
+//                 }
+//             },
+//             { data: 'nama_nasabah' },
+//             { data: 'nama_produk' },
+//             { data: 'status' },
+//             { data: 'tanggal' },
+//             { data: 'tanggal_jatuh_tempo' },
+//             { data: 'action', name: 'action', orderable: false, searchable: false },
+//         ],
+//     });
+// });
 </script>
 @endsection

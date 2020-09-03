@@ -104,7 +104,6 @@ Route::post('/transaksi/delete/{id}', 'TransaksiController@delete')->name('delet
 Route::get('/transaksi/detail/{id}', 'TransaksiController@detail')->name('detail-transaksi');
 
 Route::get('/angsuran', 'AngsuranController@list')->name('list-angsuran');
-Route::get('/angsuran/get-list', 'AngsuranController@get_list')->name('list-angsuran-get');
 Route::get('/angsuran/add', 'AngsuranController@add')->name('add-angsuran');
 Route::get('/angsuran/edit/{id}', 'AngsuranController@edit')->name('edit-angsuran');
 Route::post('/angsuran/update{id}', 'AngsuranController@update')->name('update-angsuran');
