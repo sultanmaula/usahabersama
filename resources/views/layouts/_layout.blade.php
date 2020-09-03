@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('assets')}}/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('assets')}}/images/ic_launcher.png">
     <title>Usaha Bersama</title>
     <!-- This page CSS -->
     <!-- chartist CSS -->
@@ -59,9 +59,9 @@
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="{{URL::asset('assets')}}/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <!-- <img src="{{URL::asset('assets')}}/images/logo-icon.png" alt="homepage" class="dark-logo" /> -->
                             <!-- Light Logo icon -->
-                            <!-- <img src="{{URL::asset('assets')}}/images/logo-light-icon.png" alt="homepage" class="light-logo" /> -->
+                            <img width="40" src="{{URL::asset('assets')}}/images/ic_launcher.png" alt="homepage" class="light-logo" />
                             
                         </b>
                         <!--End Logo icon -->
