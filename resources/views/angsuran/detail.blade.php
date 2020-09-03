@@ -114,7 +114,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="row">
+            <div class="table-responsive row">
                 <table class="table">
                     <tr>
                         <th>Deskripsi</th>
@@ -137,7 +137,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="row">
+            <div class="table-responsive row">
                 <table class="table">
                     <tr>
                         <th>Angsuran Ke</th>
