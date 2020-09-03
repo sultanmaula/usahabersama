@@ -36,7 +36,13 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $t->nama_produk }}</td>
-                                    <td>{{ $angsurans[$i][0]->cicilan_ke }}</td>
+                                    <td>
+                                        @if(isset($t->cicilan_ke))
+                                            {{$t->cicilan_ke}}
+                                        @else
+                                            Belum ada angsuran
+                                        @endif
+                                    </td>
                                     <td>{{ $t->tanggal }}</td>
                                     <td>
                                         @if ($t->status == 1)
@@ -45,13 +51,20 @@
                                             Belum Lunas
                                         @endif
                                     </td>
-                                    <td><a href='{{route("detail-angsuran", $angsurans[$i][0]->id)}}' class="btn btn-xs btn-warning " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></a></td>
+                                    <td>
+                                        @if(isset($t->id_angsuran))
+                                        <a href='{{route("detail-angsuran", $t->id_angsuran)}}' class="btn btn-xs btn-warning " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></a>
+                                        @endif
+                                    </td>
                                 </tr>
                                 <?php $i++;?>
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
+                    </div>  
+                    <div class="card">
+                        {{ $transaksi->links() }}
+                    </div> 
                 </div>
             </div>
         </div>

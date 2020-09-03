@@ -25,7 +25,7 @@ class AdministratorController extends Controller
             ->select('admin.*', 'roles.name as role_name')
             ->leftJoin('roles', 'roles.id', 'admin.id_role')
             ->whereNull('admin.deleted_at')
-            ->get();
+            ->paginate(10);
 
         return view('admin.index', $data);
     }

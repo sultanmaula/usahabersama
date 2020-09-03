@@ -51,6 +51,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="card">
+                        {{ $kelompok->links() }}
+                    </div>
                 </div>
             </div>
         </div>

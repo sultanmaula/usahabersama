@@ -54,6 +54,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="card">
+                        {{ $transaksis->links() }}
+                    </div> 
                 </div>
             </div>
         </div>

@@ -25,7 +25,7 @@ class NasabahController extends Controller
         ->leftJoin('kelompoks as k', 'k.id', '=', 'n.id_kelompok')
         ->whereNull('n.deleted_at')
         ->whereNull('k.deleted_at')
-        ->get();
+        ->paginate(10);
 
         // dd($data['nasabah']);
         
