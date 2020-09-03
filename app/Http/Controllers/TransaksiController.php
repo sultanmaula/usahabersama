@@ -30,7 +30,7 @@ class TransaksiController extends Controller
                                                 ->leftJoin('kelompoks', 'id_kelompok', 'kelompoks.id')
                                                 ->select('transaksis.*', 'nama', 'nama_kelompok')
                                                 ->whereNull('transaksis.deleted_at')
-                                                ->get();
+                                                ->paginate(10);
 
         foreach($data['transaksis'] as $row) {
             $row->tanggal = \Carbon\Carbon::parse($row->tanggal)->format('d/m/Y');
@@ -71,7 +71,12 @@ class TransaksiController extends Controller
         $controller    = new Controller;
         $data['menus'] = $controller->menus();
 
-        $data['nasabah'] = Nasabah::all();
+        $data['nasabah'] = DB::table('nasabahs')
+                                    ->whereNull('nasabahs.deleted_at')
+                                    ->get();
+
+        // dd($data['nasabah']);
+
         return view('transaksi.add', $data);
     }
 

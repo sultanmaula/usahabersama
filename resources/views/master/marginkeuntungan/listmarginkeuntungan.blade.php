@@ -51,6 +51,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="card">
+                        {{ $margin->links() }}
+                    </div>
                 </div>
             </div>
         </div>

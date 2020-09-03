@@ -31,7 +31,7 @@ class MasterController extends Controller
         $controller    = new Controller;
         $data['menus'] = $controller->menus();
 
-        $data['kelompok'] = Kelompok::whereNull('deleted_at')->get();
+        $data['kelompok'] = Kelompok::whereNull('deleted_at')->paginate(10);
     
         return view('master/kelompok/listkelompok', $data);
     }
@@ -116,7 +116,7 @@ class MasterController extends Controller
         $controller    = new Controller;
         $data['menus'] = $controller->menus();
     
-        $data['margin'] = MarginKeuntungan::all();
+        $data['margin'] = MarginKeuntungan::whereNull('deleted_at')->paginate(10);
         
         return view('master/marginkeuntungan/listmarginkeuntungan', $data);
     }

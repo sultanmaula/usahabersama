@@ -24,7 +24,6 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-
                     <div class="table-responsive">
                         <table id="config-table" class="table display table-bordered table-striped no-wrap">
                             <thead>
@@ -52,10 +51,12 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>
+                    <div class="card">
+                        {{ $admins->links() }}
+                    </div> 
                 </div>
             </div>
         </div>

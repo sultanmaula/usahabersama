@@ -19,9 +19,9 @@ class AngsuranController extends Controller
         $controller    = new Controller;
         $data['menus'] = $controller->menus();
         
-        $data['transaksi'] = DB::table('transaksis')->get();
+        $data['transaksi'] = DB::table('transaksis')->paginate(10);
 
-        $array_angsuran = [];
+        $i = 0;
         foreach ($data['transaksi'] as $transaksi) {
             $data_angsurans = DB::table('angsurans')
                                     ->where('id_transaksi', $transaksi->id)
@@ -30,11 +30,12 @@ class AngsuranController extends Controller
                                     ->get();
 
             if ($data_angsurans->isNotEmpty()) {
-                $array_angsuran[] = $data_angsurans;
+                $data['transaksi'][$i]->cicilan_ke = $data_angsurans[0]->cicilan_ke;
+                $data['transaksi'][$i]->id_angsuran = $data_angsurans[0]->id;
             }
-        }
 
-        $data['angsurans'] = $array_angsuran;
+            $i++;
+        }
 
         return view('angsuran.index', $data);
     }

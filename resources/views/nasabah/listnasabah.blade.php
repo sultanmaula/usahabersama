@@ -47,7 +47,7 @@
                                     <td>{{ $n->nama_kelompok }}</td>
                                     <td>{{ $n->no_hp }}</td>
                                     <td>{{ $n->nik }}</td>
-                                    <td>{{ $n->foto }}</td>
+                                    <td><img width="100" src="{{URL::asset('nasabah_image')}}/{{$n->foto}}"></td>
                                     <td>
                                         <button class="btn btn-xs btn-danger" data-record-id="{{$n->id}}" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>
                                         <a href='{{route("detail-nasabah", $n->id)}}' class="btn btn-xs btn-warning " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></a>
@@ -56,6 +56,9 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div class="card">
+                        {{ $nasabah->links() }}
                     </div>
                 </div>
             </div>
