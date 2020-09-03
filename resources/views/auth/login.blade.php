@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('assets')}}/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('assets')}}/images/ic_launcher.png">
     <title>Usaha Bersama</title>
 
     <!-- page css -->
