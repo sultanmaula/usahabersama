@@ -20,15 +20,18 @@ class AdministratorController extends Controller
         $controller    = new Controller;
         $data['roles'] = Role::all();
         $data['menus'] = $controller->menus();
-        return view('admin.index', $data);
-    }
-    public function getIndex()
-    {
-        $data = DB::table('admin')
+
+        $data['admins'] = DB::table('admin')
             ->select('admin.*', 'roles.name as role_name')
             ->leftJoin('roles', 'roles.id', 'admin.id_role')
             ->whereNull('admin.deleted_at')
             ->get();
+
+        return view('admin.index', $data);
+    }
+    public function getIndex()
+    {
+
         return datatables()->of($data)
             ->addColumn('action', function ($data) {
                 if ($data->role_name == 'SUPERADMIN' || $data->role_name == 'PRINCIPLE') {

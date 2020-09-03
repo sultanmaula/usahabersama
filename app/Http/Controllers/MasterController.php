@@ -30,21 +30,18 @@ class MasterController extends Controller
     public function listKelompok(){
         $controller    = new Controller;
         $data['menus'] = $controller->menus();
+
+        $data['kelompok'] = Kelompok::whereNull('deleted_at')->get();
     
         return view('master/kelompok/listkelompok', $data);
     }
 
     public function listKelompokGet(){
-        $datalist = Kelompok::whereNull('deleted_at')->get();
-        // dd($datalist);
+
         $data = datatables()->of($datalist)
             ->addColumn('action',function ($data){ //m
-                $button ='<a href="/master/kelompok/edit/'.$data->id.'">
-                <button class="btn btn-xs btn-primary " type="button">
-                <span class="btn-label"><i class="fa fa-file"></i></span>
-                </button>
-                </a>';
-                $button.='<button class="btn btn-xs btn-danger" data-record-id="'.$data->id.'" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>';
+                $button ='';
+                $button.='';
                 $button.='&nbsp';
                 return $button;
             })->rawColumns(['action'])->make(true);
@@ -119,20 +116,17 @@ class MasterController extends Controller
         $controller    = new Controller;
         $data['menus'] = $controller->menus();
     
+        $data['margin'] = MarginKeuntungan::all();
+        
         return view('master/marginkeuntungan/listmarginkeuntungan', $data);
     }
 
     public function listMarginkeuntunganGet(){
-        $datalist = MarginKeuntungan::all();
-        // dd($datalist);
+
         $data = datatables()->of($datalist)
             ->addColumn('action',function ($data){ //m
-                $button ='<a href="/master/marginkeuntungan/edit/'.$data->id.'">
-                <button class="btn btn-xs btn-primary " type="button">
-                <span class="btn-label"><i class="fa fa-file"></i></span>
-                </button>
-                </a>';
-                $button.='<button class="btn btn-xs btn-danger" data-record-id="'.$data->id.'" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>';
+                $button ='';
+                $button.='';
                 $button.='&nbsp';
                 return $button;
             })->rawColumns(['action'])->make(true);

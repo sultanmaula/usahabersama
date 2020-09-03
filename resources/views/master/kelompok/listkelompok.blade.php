@@ -34,7 +34,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                                @foreach($kelompok as $k)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $k->nama_kelompok }}</td>
+                                    <td>
+                                        <a href="/master/kelompok/edit/{{$k->id}}">
+                                            <button class="btn btn-xs btn-primary " type="button">
+                                                <span class="btn-label"><i class="fa fa-file"></i></span>
+                                            </button>
+                                        </a>
+                                        <button class="btn btn-xs btn-danger" data-record-id="{{$k->id}}" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -90,7 +103,7 @@
             $modalDiv.addClass('loading');
             setTimeout(function() {
                 $modalDiv.modal('hide').removeClass('loading');
-                $('#kelompok-table').DataTable().ajax.reload();
+                location.reload();
             })
         });
 
@@ -100,25 +113,25 @@
             $('.btn-ok', this).data('recordId', data.recordId);
         });
         
-        var today_table = $('#kelompok-table').DataTable({
-            processing: true,
-            serverSide: true,
-            "ajax": "{{ route('list-kelompok-get') }}",
-            columnDefs: [{
-                targets: [0, 1, 2],
-                className: 'mdl-data-table__cell--non-numeric'
-            }],
-            columns: [{
-                    "data": null,
-                    "sortable": false,
-                    render: function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
-                { data: 'nama_kelompok', name: 'nama_kelompok' },
-                { data: 'action', name: 'action' },
-            ],
-        });
+        // var today_table = $('#kelompok-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     "ajax": "{{ route('list-kelompok-get') }}",
+        //     columnDefs: [{
+        //         targets: [0, 1, 2],
+        //         className: 'mdl-data-table__cell--non-numeric'
+        //     }],
+        //     columns: [{
+        //             "data": null,
+        //             "sortable": false,
+        //             render: function(data, type, row, meta) {
+        //                 return meta.row + meta.settings._iDisplayStart + 1;
+        //             }
+        //         },
+        //         { data: 'nama_kelompok', name: 'nama_kelompok' },
+        //         { data: 'action', name: 'action' },
+        //     ],
+        // });
       
         
     });

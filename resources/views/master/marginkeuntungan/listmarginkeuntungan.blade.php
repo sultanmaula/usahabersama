@@ -34,7 +34,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                                @foreach($margin as $m)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $m->prosentase }}</td>
+                                    <td>
+                                        <a href="/master/marginkeuntungan/edit/{{$m->id}}">
+                                            <button class="btn btn-xs btn-primary " type="button">
+                                                <span class="btn-label"><i class="fa fa-file"></i></span>
+                                            </button>
+                                        </a>
+                                        <button class="btn btn-xs btn-danger" data-record-id="{{$m->id}}" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -89,7 +102,7 @@
             $modalDiv.addClass('loading');
             setTimeout(function() {
                 $modalDiv.modal('hide').removeClass('loading');
-                $('#margin-keuntungan-table').DataTable().ajax.reload();
+                location.reload();
             })
         });
 
@@ -99,25 +112,25 @@
             $('.btn-ok1', this).data('recordId', data.recordId);
         });
         
-        var today_table = $('#margin-keuntungan-table').DataTable({
-            processing: true,
-            serverSide: true,
-            "ajax": "{{ route('list-marginkeuntungan-get') }}",
-            columnDefs: [{
-                targets: [0, 1, 2],
-                className: 'mdl-data-table__cell--non-numeric'
-            }],
-            columns: [{
-                    "data": null,
-                    "sortable": false,
-                    render: function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
-                { data: 'prosentase', name: 'prosentase' },
-                { data: 'action', name: 'action' },
-            ],
-        });
+        // var today_table = $('#margin-keuntungan-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     "ajax": "{{ route('list-marginkeuntungan-get') }}",
+        //     columnDefs: [{
+        //         targets: [0, 1, 2],
+        //         className: 'mdl-data-table__cell--non-numeric'
+        //     }],
+        //     columns: [{
+        //             "data": null,
+        //             "sortable": false,
+        //             render: function(data, type, row, meta) {
+        //                 return meta.row + meta.settings._iDisplayStart + 1;
+        //             }
+        //         },
+        //         { data: 'prosentase', name: 'prosentase' },
+        //         { data: 'action', name: 'action' },
+        //     ],
+        // });
       
         
     });

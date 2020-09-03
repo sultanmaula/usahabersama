@@ -7,6 +7,7 @@ use App\Transaksi;
 use App\MarginKeuntungan;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use DB;
 
 class TransaksiController extends Controller
 {
@@ -23,17 +24,27 @@ class TransaksiController extends Controller
         $controller    = new Controller;
         $data['menus'] = $controller->menus();
 
+        // $data['transaksis'] = Transaksi::with('nasabah')->get();
+        $data['transaksis'] = DB::table('transaksis')
+                                                ->leftJoin('nasabahs', 'id_nasabah', 'nasabahs.id')
+                                                ->leftJoin('kelompoks', 'id_kelompok', 'kelompoks.id')
+                                                ->select('transaksis.*', 'nama', 'nama_kelompok')
+                                                ->whereNull('transaksis.deleted_at')
+                                                ->get();
+
+        foreach($data['transaksis'] as $row) {
+            $row->tanggal = \Carbon\Carbon::parse($row->tanggal)->format('d/m/Y');
+            $row->tanggal_jatuh_tempo = \Carbon\Carbon::parse($row->tanggal_jatuh_tempo)->format('d/m/Y');
+        }
+
+        // dd($data['transaksis']);
+
         return view('transaksi.index', $data);
     }
 
     public function get_list()
     {
-        $data = Transaksi::with('nasabah')->get();
 
-        foreach($data as $row) {
-            $row->tanggal = \Carbon\Carbon::parse($row->tanggal)->format('d/m/Y');
-            $row->tanggal_jatuh_tempo = \Carbon\Carbon::parse($row->tanggal_jatuh_tempo)->format('d/m/Y');
-        }
 
         return datatables()->of($data)
             ->addColumn('status', function ($data) {
@@ -45,9 +56,9 @@ class TransaksiController extends Controller
             ->addColumn('action', function ($data) {
 
                 // $button = '<a href=' . route("edit-transaksi", $data->id) . ' class="btn btn-xs btn-primary " type="button"><span class="btn-label"><i class="fa fa-file"></i></span></a>' . '&nbsp';
-                $button = '<button class="btn btn-xs btn-danger" data-record-id="' . $data->id . '" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>';
+                $button = '';
                 $button .= "&nbsp";
-                $button .= '<a href=' . route("detail-transaksi", $data->id) . ' class="btn btn-xs btn-warning " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></a>';
+                $button .= '';
                 $button .= "&nbsp";
 
                 return $button;
