@@ -75,7 +75,16 @@ class TransaksiController extends Controller
                                     ->whereNull('nasabahs.deleted_at')
                                     ->get();
 
-        // dd($data['nasabah']);
+        foreach ($data['nasabah'] as $key=>$nasabah) {
+            $transaksi = DB::table('transaksis')
+                                    ->where('id_nasabah', $nasabah->id)
+                                    ->where('status', 0)
+                                    ->get();
+
+            if ($transaksi->isNotEmpty()) {
+                unset($data['nasabah'][$key]);
+            }
+        }
 
         return view('transaksi.add', $data);
     }
