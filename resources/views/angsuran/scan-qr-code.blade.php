@@ -4,12 +4,13 @@
 <div class="container-fluid">
 	<div class="card">
 		<div class="card-body">
-			<div class="row">
+			<div id="camera" class="row">
 				<div style="margin: 0 auto;" id="reader"></div>
 			</div>
 			<div class="row">
-				<div style="margin: 0 auto;">
-					<button class="btn-sm btn-info mt-2" type="button" onclick="listcamera()">Mulai Scan</button>
+				<div id="tombol" style="margin: 0 auto;">
+					<button id="mulaiscan" class="btn-xs btn-info mt-2" type="button" onclick="listcamera()">Mulai Scan</button>
+					<button id="maticamera" class="btn-xs btn-danger mt-2" type="button" style="display: none;" onclick="maticamera('reader')">Matikan Scan</button>
 				</div>
 			</div>
 		</div>
@@ -34,9 +35,19 @@
 				// handle err 
 					alert(err);
 		});
+		
+	}
+
+	function maticamera(elementID) {
+		document.getElementById(elementID).innerHTML = ''
+		$("#maticamera").css('display', 'none');
+		$("#mulaiscan").css('display', 'block');
 	}
 
 	function scan(cameraId) {
+
+		$("#maticamera").css('display', 'block');
+		$("#mulaiscan").css('display', 'none');
 		const html5Qr = new Html5Qrcode("reader");
 
 		html5Qr.start(
