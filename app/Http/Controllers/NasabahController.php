@@ -185,4 +185,10 @@ class NasabahController extends Controller
         return view('nasabah.printqrcodenasabah', $data);
     }
 
+    public function printQrCodeAll(){
+        $data['nasabah'] = DB::table('nasabahs')->get();
+
+        return view('nasabah.printqrcodeall', $data);
+    }
+
 }
