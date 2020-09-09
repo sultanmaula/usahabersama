@@ -92,6 +92,7 @@ Route::post('/nasabah/store', 'NasabahController@storeNasabah')->name('store-nas
 Route::post('/nasabah/delete/{id}', 'NasabahController@deleteNasabah')->name('delete-nasabah');
 Route::get('/nasabah/detail/{id}', 'NasabahController@detailNasabah')->name('detail-nasabah');
 Route::get('/nasabah/detail/printqrcode/{id}', 'NasabahController@printQrCodeNasabah')->name('printqrcode-nasabah');
+Route::get('/nasabah/printqrcode', 'NasabahController@printQrCodeAll')->name('printqrcode-all');
 
 
 Route::get('/transaksi', 'TransaksiController@list')->name('list-transaksi');

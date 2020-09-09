@@ -60,6 +60,7 @@
                     <div class="card">
                         {{ $nasabah->links() }}
                     </div>
+                <a class="btn btn-success" href="/nasabah/printqrcode">Print Semua QR-Code</a>
                 </div>
             </div>
         </div>
