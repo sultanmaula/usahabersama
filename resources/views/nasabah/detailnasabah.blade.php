@@ -38,7 +38,7 @@
                         @if(!empty($nasabah[0]->nik))
                             {{ $nasabah[0]->nik }}
                         @else
-                            Tidak ada data NIK
+                            -
                         @endif
                     </div>
                     <label class="control-label" style="font-weight: bold;">QR-Code</label>
@@ -48,11 +48,7 @@
                 <div class="form-group col-md-6">
                     <label class="control-label" style="font-weight: bold;">Foto</label>
                     <div>
-                        @if(!empty($nasabah[0]->foto))
-                            <img src="{{$nasabah[0]->foto}}" width="200">
-                        @else
-                            Tidak ada data foto
-                        @endif
+                        <img src="{{$nasabah[0]->foto}}" width="200">
                     </div>
                 </div>
             </div>
