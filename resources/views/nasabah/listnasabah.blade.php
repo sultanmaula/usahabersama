@@ -50,15 +50,11 @@
                                         @if(!empty($n->nik))
                                             {{ $n->nik }}
                                         @else
-                                            Tidak ada data NIK
+                                            -
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!empty($n->foto))
-                                            <img width="100" src="{{$n->foto}}">
-                                        @else
-                                            Tidak ada data foto
-                                        @endif
+                                        <img width="100" src="{{$n->foto}}">
                                     </td>
                                     <td>
                                         <button class="btn btn-xs btn-danger" data-record-id="{{$n->id}}" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>

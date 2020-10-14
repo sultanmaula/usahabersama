@@ -28,7 +28,7 @@ class NasabahController extends Controller
         ->whereNull('k.deleted_at')
         ->paginate(10);
 
-        // dd($data['nasabah']);
+        $data['url'] = URL::to('/nasabah_image');
         
         return view('nasabah/listnasabah', $data);
     }
@@ -78,13 +78,17 @@ class NasabahController extends Controller
             $file->move($tujuan_upload, $namaFile);
         }
 
+        if ($namaFile == '') {
+            $namaFile = 'default.png';
+        }
+
         $nasabah = new Nasabah();
         $nasabah->nama = $request->nama_nasabah;
         $nasabah->alamat = $request->alamat;
         $nasabah->id_kelompok = $request->kelompok;
         $nasabah->no_hp = $request->no_hp;
         $nasabah->nik = $request->nik;
-        $nasabah->foto =  $url.'/'.$namaFile;
+        $nasabah->foto = $url.'/'.$namaFile;
         $nasabah->save();
 
         return redirect()->route('list-nasabah');
