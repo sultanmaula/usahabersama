@@ -189,7 +189,7 @@ class NasabahController extends Controller
     }
 
     public function printQrCodeAll(){
-        $data['nasabah'] = DB::table('nasabahs')->get();
+        $data['nasabah'] = DB::table('nasabahs')->whereNull('deleted_at')->get();
 
         return view('nasabah.printqrcodeall', $data);
     }
