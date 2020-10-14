@@ -84,7 +84,8 @@ $(document).ready(function() {
         autoclose: true,
         language: 'id',
         locale: 'id',
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        orientation: 'bottom auto'
     });
 
 

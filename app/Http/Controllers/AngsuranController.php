@@ -92,6 +92,8 @@ class AngsuranController extends Controller
             'tanggal'       => 'required',
         ]);
 
+        $tanggal = \Carbon\Carbon::parse($request->tanggal)->format('Y-m-d');
+
         $jml_angsuran   = intval(preg_replace('/\D/', '', $request->jml_angsuran));
         $prosentase     = MarginKeuntungan::pluck('prosentase')->first();
         $transaksi      = Transaksi::find($request->id_transaksi);
@@ -205,7 +207,7 @@ class AngsuranController extends Controller
             'cicilan_ke' => $angsuran_ke,
             'jml_angsuran' => $jml_angsuran,
             'sisa_pinjaman' => $sisa_pinjaman,
-            'tanggal' => $request->tanggal,
+            'tanggal' => $tanggal,
             'created_at' => date('Y-m-d H:i:s'),
             'angsuran_pokok' => $angsuran_pokok,
             'angsuran_laba' => $angsuran_laba,
