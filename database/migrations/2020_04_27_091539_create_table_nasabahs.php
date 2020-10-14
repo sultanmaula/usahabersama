@@ -20,8 +20,8 @@ class CreateTableNasabahs extends Migration
             $table->string('alamat');
             $table->uuid('id_kelompok');
             $table->string('no_hp');
-            $table->string('nik');
-            $table->string('foto');
+            $table->string('nik')->nullable();
+            $table->string('foto')->nullable();
             $table->date('deleted_at')->nullable();
             $table->timestamps();
         });

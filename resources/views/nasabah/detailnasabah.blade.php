@@ -34,14 +34,26 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label class="control-label" style="font-weight: bold;">NIK</label>
-                    <div class="mb-4">{{$nasabah[0]->nik}}</div>
+                    <div class="mb-4">
+                        @if(!empty($nasabah[0]->nik))
+                            {{ $nasabah[0]->nik }}
+                        @else
+                            Tidak ada data NIK
+                        @endif
+                    </div>
                     <label class="control-label" style="font-weight: bold;">QR-Code</label>
                     <div class="mb-3">{!! QrCode::size('150')->generate($nasabah[0]->id_nasabah); !!}</div>
                     <a href="/nasabah/detail/printqrcode/{{$nasabah[0]->id_nasabah}}" class="btn-sm btn-info" type="button" target="_blank">Print QR-Code</a>
                 </div>
                 <div class="form-group col-md-6">
                     <label class="control-label" style="font-weight: bold;">Foto</label>
-                    <div><img src="/nasabah_image/{{ $nasabah[0]->foto }}" width="200"></div>
+                    <div>
+                        @if(!empty($nasabah[0]->foto))
+                            <img src="{{$nasabah[0]->foto}}" width="200">
+                        @else
+                            Tidak ada data foto
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

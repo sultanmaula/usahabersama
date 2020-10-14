@@ -9,6 +9,7 @@ use Datatables;
 use DB;
 use Carbon\Carbon;
 use QrCode;
+use URL;
 
 class NasabahController extends Controller
 {
@@ -65,9 +66,9 @@ class NasabahController extends Controller
             'alamat' => 'required',
             'kelompok' => 'required',
             'no_hp' => 'required',
-            // 'nik' => 'required',
-            // 'foto' => 'required|file|image|mimes:jpeg,png,jpg|max:2048'
         ]);
+
+        $url = URL::to('/nasabah_image');
         
         $namaFile = '';
         if ($request->file('foto')  ) {
@@ -83,7 +84,7 @@ class NasabahController extends Controller
         $nasabah->id_kelompok = $request->kelompok;
         $nasabah->no_hp = $request->no_hp;
         $nasabah->nik = $request->nik;
-        $nasabah->foto = $namaFile;
+        $nasabah->foto =  $url.'/'.$namaFile;
         $nasabah->save();
 
         return redirect()->route('list-nasabah');
@@ -107,8 +108,6 @@ class NasabahController extends Controller
             'alamat' => 'required',
             'kelompok' => 'required',
             'no_hp' => 'required',
-            'nik' => 'required',
-            'foto' => 'file|image|mimes:jpeg,png,jpg|max:2048'
         ]);
         $nasabah = Nasabah::find($request->id);
 
