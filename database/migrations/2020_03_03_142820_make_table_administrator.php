@@ -13,7 +13,7 @@ class MakeTableAdministrator extends Migration
      */
     public function up()
     {
-        DB::statement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
+        // DB::statement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
         Schema::create('admin', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
