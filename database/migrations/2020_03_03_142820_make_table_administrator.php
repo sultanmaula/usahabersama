@@ -15,14 +15,13 @@ class MakeTableAdministrator extends Migration
     {
         DB::statement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
         Schema::create('admin', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('nama');
             $table->string('no_hp')->nullable();
             $table->string('email');
             $table->string('password');
             $table->string('confirm_password')->nullable();
-            $table->uuid('id_role');
-            $table->date('deleted_at')->nullable();
+            $table->tinyInteger('id_role');
             $table->timestamps();
         });
         DB::statement('ALTER TABLE admin ALTER COLUMN id SET DEFAULT uuid_generate_v4();');
